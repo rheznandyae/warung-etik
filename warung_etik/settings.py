@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'main',
     'barang',
     'chat',
+    'channels',
     'keranjang',
     'transaksi',
     'admin_warung'
@@ -95,7 +96,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'warung_etik.wsgi.application'
+ASGI_APPLICATION = "warung_etik.asgi.application"
 
+# Channels for chat, TODO change param for deployment.
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
