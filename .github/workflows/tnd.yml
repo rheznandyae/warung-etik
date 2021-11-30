@@ -105,7 +105,7 @@ jobs:
   #       path: htmlcov/
 
   Deployment:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
