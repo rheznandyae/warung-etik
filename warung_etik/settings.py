@@ -60,7 +60,9 @@ INSTALLED_APPS = [
     'chat',
     'keranjang',
     'transaksi',
-    'admin_warung'
+    'admin_warung',
+    'review',
+    'visualisasi_data'
 ]
 
 MIDDLEWARE = [
