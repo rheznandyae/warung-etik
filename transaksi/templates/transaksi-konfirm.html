@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Warung Etik</title>
+<link rel="stylesheet" href="{% static 'css/style-transaksi.css' %}" />
+{% endblock meta %}
+
+{% block content %}
+
+<div class="container-md d-flex align-items-center flex-column min-vh-100">
+    
+    <section class="top-title">
+        <h1>Konfirmasi Transfer</h1>
+    </section>
+
+    <section class="container">
+        <div class="card card-main">
+            <div class="margin-card">
+
+                <section class="content-main">
+                    <h3>lakukan transfer ke rekening berikut</h3>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card mt-4"">
+                                <div class="card-body">
+                                    <h4 class="card-title mt-2">Bank ABC</h4>
+                                    <h4 class="card-title">WarungEtik</h4>
+                                    
+                                    <h5 class="card-text mt-3">no. rekening : 12345xxxx</h5>
+                                    <h5 class="card-text mt-2 mb-2">nominal transfer : Rp. 27.000</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-4">status pemesanan : menunggu konfirmasi admin</h4>
+
+                    <a href="{% url 'chat:chat_pelanggan' %}"><button class="btn btn-lg btn-color mt-4 mb-3"><span style="color: white;">CHAT ADMIN</span></button></a>
+                </section>
+                
+                <section class="content-main">
+                    <h3>detil pesanan</h3>
+
+                    <div class="row mt-2">
+
+                        <div class="col-md-4">
+                            <img class="img-barang" src="https://cf.shopee.co.id/file/64a464eea863fd5c110dc035c43c946b" alt="indomie">
+                        </div>
+
+                        <div class="col-md-8">
+                            <h4 class="top-align">indomie goreng</h4>
+                            <h5 class="mid-align">rp. 2.500</h5>
+                            <h5 class="bottom-align">jumlah barang : 5</h5>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row mt-2">
+
+                        <div class="col-md-4">
+                            <img class="img-barang" src="https://cf.shopee.co.id/file/64a464eea863fd5c110dc035c43c946b" alt="indomie">
+                        </div>
+
+                        <div class="col-md-8">
+                            <h4 class="top-align">indomie goreng</h4>
+                            <h5 class="mid-align">rp. 2.500</h5>
+                            <h5 class="bottom-align">jumlah barang : 5</h5>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+            </div>
+        </div>
+    </section>
+
+</div>
+
+{% endblock content %}

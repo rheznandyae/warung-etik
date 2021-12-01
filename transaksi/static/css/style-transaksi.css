@@ -1,0 +1,68 @@
+.top-title {
+  margin-top: 20vh;
+  margin-bottom: 5%;
+}
+
+.top-title h1 {
+  font-weight: 800;
+  font-size: 6vh;
+}
+
+.card-main {
+  border: 0;
+  margin-bottom: 15vh;
+}
+
+.card-main h3 {
+  font-weight: 800;
+  font-size: 1.6em;
+  text-transform: uppercase;
+}
+
+.card-main h4 {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.card-main h5 {
+  text-transform: capitalize;
+}
+
+.margin-card {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  margin-left: 10vh;
+  margin-right: 10vh;
+}
+
+.content-main {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.grey-square {
+  padding: 2em;
+  background-color: grey;
+}
+
+.img-barang {
+  width: 20vh;
+  height: 20vh;
+  object-fit: cover;
+}
+
+.top-align {
+  margin-top: 1.2em;
+}
+
+.mid-align {
+  margin-top: 1em;
+}
+
+.bottom-align {
+  margin-top: 3em;
+}
+
+.btn-color {
+  background-color: #0dcaf0;
+}

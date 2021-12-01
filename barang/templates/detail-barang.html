@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Warung Etik</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/css-barang.css' %}">
+{% endblock meta %}
+
+{% block content %}
+
+<div class="container min-vh-100 mt-5">
+
+    <div class="row">
+      <div class="col-12 col-lg-6 mt-5">
+        <img class="rounded-3 shadow img-fluid" src="https://images.tokopedia.net/img/cache/900/product-1/2020/2/19/47871595/47871595_b6aa9df0-846b-4846-95d1-940248340634_1000_1000" alt="">
+      </div>
+      <div class="col col-12 col-lg-6 mt-5">
+        <h1><b>Indomie Goreng</b></h1>
+
+        <div class="row mt-2 mb-2">
+            <h2><b>Rp. 2500</b></h2>
+        </div>
+
+        <h3>Jenis: </h3>
+
+        <div class="mt-2 mb-5">
+
+            <div class="btn-group flex-wrap" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-secondary" for="btnradio1">Original</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="btnradio2">Rendang</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="btnradio3">Jumbo</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="btnradio4">Aceh</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="btnradio5">Pedas</label>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <h3 class="align-text-bottom">Jumlah:</h3>
+        </div>
+
+        <div class="row">
+            <div class="btn-group btn-quantity" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-secondary"><b>-</b></button>
+                <button type="button" class="" style="width: 90vw; border: 0; cursor: default;"><b>0</b></button>
+                <button type="button" class="btn btn-secondary"><b>+</b></button>
+            </div>
+        </div>
+        <div class="row">
+            <a href="{% url 'keranjang:keranjang' %}" class=" btn-tambah btn btn-info btn-lg mt-5 pos-hero"><span>Tambahkan ke keranjang</span></a>
+        </div>
+    </div>
+    </div>
+
+    <div class="row mt-5">
+        <h3>Deskripsi</h3>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+        <p>Mie instan goreng yang terbuat dari tepung terigu berkualitas dengan paduan rempah-rempah pilihan terbaik, Indomie Goreng diproses dengan higienis menggunakan standar internasional dan teknologi berkualitas tinggi sehingga menghasilkan mie instant dengan tekstur dan rasa yang disukai semua orang.
+            Juga dilengkapi tambahan fortifikasi mineral dan vitamin A, B1, B6, B12, Niasin, Asam Folat & Mineral Zat Besi yang dibutuhkan tubuh. Nikmati Indomie Goreng lezat berpadu dengan bawang goreng renyah dan saus cabe mantap untuk menemani Anda di kala lapar. Cocok untuk disantap dalam segala waktu dan suasana.
+        </p>
+        </div>
+    </div>
+
+    <div id="ulasan" class="row mt-3 mb-2">
+        <h1 style="font-weight: bold;">Ulasan</h1>
+    </div>
+
+    <div>
+        <div class="row mb-3">
+            <div class="col-2 col-lg-1"><img class="rounded-3 shadow img-fluid mt-2" src="https://secure.gravatar.com/avatar/141270ad849615ed6de6d0824d4895ec?s=400&d=mm&r=g" alt="">
+            </div>
+            <div class="col-12 col-lg-8 mt-2">
+                <h2>Bobi</h2><a href="{% url 'review:tulis' %}">edit</a>
+                <p>Widih keren banget warung etik emang! Beli di sini lagi nanti ah. Memang developernya debest parah dah pokonya11 ...</p>
+            </div>
+            <div class="col-6 col-lg-2 mt-2 stars">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-2 col-lg-1"><img class="rounded-3 shadow img-fluid mt-2" src="https://secure.gravatar.com/avatar/141270ad849615ed6de6d0824d4895ec?s=400&d=mm&r=g" alt="">
+            </div>
+            <div class="col-12 col-lg-8 mt-2">
+                <h2>Con</h2>
+                <p>udah basi</p>
+            </div>
+            <div class="col-6 col-lg-2 mt-2 stars">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star_outline</span>
+                <span class="material-icons">star_outline</span>
+                <span class="material-icons">star_outline</span>
+                <span class="material-icons">star_outline</span>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <a href="{% url 'review:tulis'%}" class="btn-review btn btn-info btn-lg mt-5 pos-hero"><span>Tulis Review</span></a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

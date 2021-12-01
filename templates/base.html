@@ -1,18 +1,44 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Bootstrap CSS -->
+		{% include "snippets/bootstrap-css.html" %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  {% block meta %}
-  {% endblock meta %}
-</head>
+		<!-- Block Meta -->
+		{% block meta %} {% endblock meta %}
+	</head>
 
-<body>
-  {% block content %}
-  {% endblock content %}
-</body>
+  
+  <body style="background-color: #f2f3ff;">
+		<!-- Navbar -->
+		{% include "navbar.html" %}
 
+		<!-- Block Content -->
+		{% block content %} 
+   
+    	{% endblock content %}
+
+		<!-- Footer -->
+		{% include "footer.html" %}
+
+	</body>
+
+	<!-- Bootstrap JS -->
+	{% include "snippets/bootstrap-js.html" %}
+
+	<!-- jQuery -->
+	{% include "snippets/jquery.html" %}
+
+	<!-- Block Script -->
+	{% block script %}{% endblock script %}
 </html>
+

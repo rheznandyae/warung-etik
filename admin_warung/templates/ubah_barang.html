@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Ubah Barang</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/css_admin.css' %}">
+
+{% endblock meta %}
+
+{% block content %}
+
+<body>
+    <div class="dashboard container min-vh-100">
+        <h2><b>Ubah Barang</b></h2>
+        <form method="POST">
+            {% csrf_token %}
+            <table class="w-100">
+                <tr>
+                    <td style="width: 222px;"><b>Nama</b></td>
+                    <td><input type="text" class="form-control" id="nama" value="Indomie"></td>
+                </tr>
+                <tr>
+                    <td style="width: 222px;"><b>Stok</b></td>
+                    <td><input type="text" class="form-control" id="stok" value=3></td>
+                </tr>
+                <tr>
+                    <td style="width: 222px;"><b>Jumlah Terjual</b></td>
+                    <td><input type="text" class="form-control" id="terjual" value=9></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 222px;"><b>Deskripsi</b></td>
+                    <td><textarea name="deskripsi" cols="40" rows="5" id="deskripsi">Indomie seleraku</textarea></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 222px;"><b>Gambar</b></td>
+                    <td><img class="rounded-3 img-fluid col-8 col-lg-3" src="https://images.unsplash.com/photo-1611312752514-9439fdba223d" alt=""></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{form.gambar}}</td>
+                </tr>
+            </table>
+            <div class="text-center" style="padding-top: 25px;">
+                <button type="submit" class="btn btn-primary">Ubah</button>
+                <a class="btn btn-secondary" href="{% url 'admin_warung:list-ubah' %}" role="button">Kembali</a>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}

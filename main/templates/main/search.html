@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>WarungEtik</title>
+{% endblock meta %}
+
+{% block content %}
+  <div id="bottom" class="front-page-lower container">
+  <div class="min-vh-100">
+    <div class="search mb-4">
+      <h3>Search<span class="material-icons ms-2">search</span></h3>
+      
+      <form>
+        <div class="btn-group" role="group">
+          <input type="text" class="form-control" id="search" value="indomie">
+        
+          <a href=""><button class="btn btn-info ms-1">Cari</button></a>
+        </div>
+        <div id="help" class="form-text">masukan barang yang ingin dicari</div>
+      </form>
+
+      
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card h-100">
+          <a href="{% url 'barang:detail' %}">
+          <img src="https://images.tokopedia.net/img/cache/900/product-1/2020/2/19/47871595/47871595_b6aa9df0-846b-4846-95d1-940248340634_1000_1000" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Indomie Goreng</h5></a>
+            <p class="card-text">Mie instan goreng yang terbuat dari tepung terigu berkualitas.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a short card.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

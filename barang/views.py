@@ -1,3 +1,6 @@
+from django.http import response
 from django.shortcuts import render
 
-# Create your views here.
+def detail_barang(request):
+    context = {}
+    return render(request, 'detail-barang.html', context=context)

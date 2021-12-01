@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Hapus Barang</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/css_admin.css' %}">
+
+{% endblock meta %}
+
+{% block content %}
+
+<body>
+    <div class="dashboard container w-100 min-vh-100">
+        <div class="text-center">
+            <h2>Hapus Barang</h2>
+        </div>
+        <div class="container-lg d-flex align-items-center flex-column min-vh-100">
+            <div class="d-flex justify-content-center row mx-1 mx-md-0">
+                <div class="card shadow col-12 col-md-8 mt-2">
+                    <div class="m-2 p-2">
+                        <div class="row justify-content-center w-auto">
+
+                            <table>
+                                <tr>
+                                    <td style="width: 170px;"><b>Nama</b></td>
+                                    <td>: Indomie</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 170px;"><b>Stok</b></td>
+                                    <td>: 10</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 170px;"><b>Jumlah Terjual</b></td>
+                                    <td>: 9</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 170px;"><b>Deskripsi</b></td>
+                                    <td>: Indomie Goreng</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 170px;"><b>Gambar</b></td>
+                                    <td>: <img class="rounded-3 img-fluid col-8 col-lg-8"
+                                            src="https://images.unsplash.com/photo-1611312752514-9439fdba223d" alt="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center" style="padding-top: 25px;">
+                <button type="submit" class="btn btn-primary">Hapus</button>
+                <a class="btn btn-secondary" href="{% url 'admin_warung:list-hapus' %}" role="button">Kembali</a>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

@@ -1,3 +1,6 @@
+from django.http import response
 from django.shortcuts import render
 
-# Create your views here.
+def tulis(request):
+    context = {}
+    return render(request, 'tulis-review.html', context=context)

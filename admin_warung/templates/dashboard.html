@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Welcome Admin</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/css_admin.css' %}">
+
+{% endblock meta %}
+
+{% block content %}
+  <div class="dashboard container min-vh-100">
+    <h1><b>Dashboard Admin</b></h1>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Import Data
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Masukan File Excel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <form
+          id="form"
+          class="form-base"
+          method="POST"
+          enctype="multipart/form-data"
+          action="{% url 'admin_warung:import-barang' %}"
+        >
+          {% csrf_token %}
+          <div class="form-fields">
+            {% for field in excel_upload_form %}
+            <div class="field-wrapper">
+              <div class="field-input">{{ field.label_tag }} {{ field }}</div>
+              <div class="field-error">{{ field.errors }}</div>
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+
+          <button type="button" class="btn btn-outline-danger mt-4" data-bs-dismiss="modal">
+            Batal
+          </button>
+          <button id="btn-import" type="submit" class="button btn btn-outline-success form-submit-button mt-4">
+            Import
+          </button>
+        </form>
+        </div>
+      </div> 
+      </div>
+    </div>
+
+
+    <button type="button" class="btn btn-outline-info">Export Data</button>
+    <a href="#daftar-barang" class="btn btn-outline-info">Daftar Barang</a>
+    <a href="{% url 'admin_warung:list-ubah' %}" class="btn btn-outline-info">Ubah Barang</a>
+    <a href="{% url 'admin_warung:tambah-barang' %}" class="btn btn-outline-info">Tambah Barang</a>
+    <a href="{% url 'admin_warung:list-hapus' %}" class="btn btn-outline-info">Hapus Barang</a>
+    <a href="{% url 'visualisasi_data:visualisasi' %}" class="btn btn-outline-info">Visualisasi Data</a>
+
+    <div class="daftar-transaksi">
+        <h3>Daftar Transaksi</h3>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">No. Transaksi</th>
+                <th scope="col">Jlh. Pembayaran</th>
+                <th scope="col">Deskripsi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>TRX0138</td>
+                <td>Rp. 150,000</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>TRX0123</td>
+                <td>Rp. 30,000</td>
+                <td>bayar di tempat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>TRX0131</td>
+                <td>Rp. 1,000,000</td>
+                <td>transfer bank</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+    <div id="daftar-barang">
+        <h3>Daftar Barang</h3>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nama Barang</th>
+                <th scope="col">Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Indomie Goreng</td>
+                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Indomie Kuah</td>
+                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
+              </tr>              <tr>
+                <th scope="row">3</th>
+                <td>Indomie Aceh</td>
+                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
+              </tr>
+
+            </tbody>
+          </table>
+    </div>
+
+
+  </div>
+{% endblock content %}

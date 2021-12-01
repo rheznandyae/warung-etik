@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Warung Etik</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container-lg d-flex align-items-center flex-column min-vh-100">
+    <div class="text-center mt-5 pt-5 mb-3">
+        <h1><b>Register</b></h1>
+    </div>
+    <div class="col-6 d-flex justify-content-center row mx-1 mx-md-0">
+
+        
+        <form class="">
+            <div class="mb-3">
+                <label for="nama-depan" class="form-label">Nama Depan</label>
+                <input type="text" class="form-control" id="nama-depan" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="nama-belakang" class="form-label">Nama Belakang</label>
+                <input type="text" class="form-control" id="nama-belakang">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <div class="mb-3">
+                <label for="password-confirm" class="form-label">Password Confirm</label>
+                <input type="password" class="form-control" id="password-confirm">
+            </div>
+            <button type="button" style="background-color: #04D4F0; color: #FFFFFF;" class="btn fw-bold">Register</button>
+        </form>
+
+
+
+
+    </div>
+
+</div>
+
+{% endblock content %}

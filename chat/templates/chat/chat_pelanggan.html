@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
+
+<title>Chat Pelanggan</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container app">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div class="chat" id="chat-2">
+                    <div class="chat-header clearfix bg-custom-1">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">Admin</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:12 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Pagi gan</div>                                    
+                            </li>                               
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:15 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Tadi saya sudah bayar via transfer, boleh tolong dicheck?</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data d-flex justify-content-end">
+                                    <span class="message-data-time">10:16 AM, Today</span>
+                                </div>
+                                <div class="message other-message float-right"> Siap Gan!!! </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control" placeholder="Write your message here...">                                    
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <label class="" href=""><span class="material-icons" id="send-logo">send</span></label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
