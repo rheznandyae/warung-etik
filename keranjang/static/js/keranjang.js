@@ -103,7 +103,11 @@ async function minus1_item_keranjang(id){
         itemKeranjangUpdated.innerHTML = `
             <b>${item.jumlah_item}</b>
         `
+        if(item.jumlah_item === 0){
+            document.querySelector(`.item-${item.id}`).remove()
+        }
     })
+    
     update_total_harga()
 }
 

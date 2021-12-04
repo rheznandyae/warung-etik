@@ -70,7 +70,11 @@ def minus1_amount_item_keranjang(request):
     item_keranjang = ItemKeranjang.objects.get(id = id_keranjang)
 
     item_keranjang.jumlah_item -= 1
-    item_keranjang.save()
+    
+    if item_keranjang.jumlah_item > 0 :
+        item_keranjang.save()
+    else :
+        ItemKeranjang.objects.get(id = item_keranjang.id).delete()
     item_serializer = ItemKeranjangSerializers(instance=item_keranjang)
 
     return Response(item_serializer.data)
