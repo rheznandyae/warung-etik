@@ -30,11 +30,7 @@ def keranjang_view(request):
 
 @api_view(['GET'])
 def get_item_keranjang_by_user(request, username):
-    # print(username)s
-    # tes = {"hahah":username}
-    # print("asu")
     item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi=None)
-    # item_keranjangs = ItemKeranjang.objects.all()
     item_serializer = ItemKeranjangSerializers(instance=item_keranjangs, many=True)
     return Response(item_serializer.data)
 
@@ -69,9 +65,6 @@ def plus1_amount_item_keranjang(request):
 
 @api_view(['POST'])
 def minus1_amount_item_keranjang(request):
-    
-    # username = request.data['username']
-    # id_barang = request.data['id_barang']
     id_keranjang = request.data['id_keranjang']
 
     item_keranjang = ItemKeranjang.objects.get(id = id_keranjang)
@@ -98,13 +91,18 @@ def item_keranjang_detail(request, id_keranjang):
 
 @api_view(['GET'])
 def get_total_price(request,username):
-    item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username)
-    
+    item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=None)
+
+    total_item = 0
     total_price = 0
     for item in item_keranjangs:
+        total_item += 1
         total_price += item.jumlah_item * item.barang.harga
 
-    return Response({'total_price' : total_price})
+    return Response({
+        'total_price' : total_price,
+        'total_item' : total_item
+        })
 
 
 
