@@ -59,22 +59,25 @@
                 <section class="content-main">
                     <h3>pilih metode pembayaran</h3>
 
-                    <form action="">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        
                         <div class="form-check mt-3">
-                            <input class="form-check-input me-1" type="radio" name="radio" id="transfer">
+                            <input class="form-check-input me-1" type="radio" name="metode" id="transfer" value="transfer" required>
                             <label class="form-check-label" for="transfer">
                                 <h5>Transfer Bank</h5> 
                             </label>
                         </div>
+
                         <div class="form-check mt-1">
-                            <input class="form-check-input me-1" type="radio" name="radio" id="langsung">
+                            <input class="form-check-input me-1" type="radio" name="metode" id="langsung" value="langsung">
                             <label class="form-check-label" for="langsung">
                                 <h5>Bayar ditempat</h5> 
                             </label>
                         </div>
-                    </form>
 
-                    <a href="{% url 'transaksi:transaksiBayar' %}"><button class="btn btn-lg btn-color mt-5"><span style="color: white;">BUAT PESANAN</span></button></a> 
+                        <input class="btn btn-lg btn-color mt-5" type="submit" value="BUAT PESANAN" style="color: white;">
+                    </form>
                 </section>
                 
             </div>
