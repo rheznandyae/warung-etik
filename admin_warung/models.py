@@ -8,3 +8,4 @@ class Barang(models.Model):
     stok = models.PositiveIntegerField()
     terjual = models.PositiveIntegerField()
     deskripsi = models.TextField()
+    image_url = models.TextField(default="")
