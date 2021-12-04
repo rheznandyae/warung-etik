@@ -7,13 +7,15 @@
 {% endblock meta %}
 
 {% block content %}
+{{ request.user.id|json_script:"user_id" }}
+
 <div class="container-lg d-flex align-items-center flex-column min-vh-100">
     <div class="text-center mt-5 pt-5 mb-1 mb-lg-3">
         
         <h1><img class="w-25 me-3" src="{% static 'img/keranjang.svg' %}" alt="keranjang"><b>Keranjang</b></h1>
     </div>
     <div class="list-keranjang d-flex justify-content-center row mx-1 mx-md-0">
-        {% for barang in list_barang %}
+        <!-- {% for barang in list_barang %}
         <div class="card shadow col-12 col-md-8 mt-2">
             <div class="m-2 p-2">
                 <div class="row justify-content-center w-auto">
@@ -41,7 +43,7 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+        {% endfor %} -->
         
 
     </div>
@@ -51,5 +53,7 @@
     </a>    
 
 </div>
+
+<script src="{% static 'js/keranjang.js' %}"></script>
 
 {% endblock content %}
