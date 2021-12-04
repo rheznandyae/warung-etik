@@ -31,7 +31,7 @@
                 <textarea class="form-control" id="ulasan" name="content" rows="3"></textarea>
             </div>
             <input class="btn btn-tulis fw-bold" type="submit" value="Tulis">  
-            <a href="#" class="btn btn-batal fw-bold">Batal</a>
+            <a href="{% url 'barang:detail' id_barang %}" class="btn btn-batal fw-bold">Batal</a>
         </div>
     </form>
 </div>

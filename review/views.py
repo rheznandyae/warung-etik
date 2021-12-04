@@ -5,14 +5,16 @@ from .models import ReviewBarang
 
 def tulis(request, id):
     
-    context = {}
+    context = {
+        'id_barang':id
+    }
     if request.method == "POST":
         barang = Barang.objects.get(id=id)
         bintang = request.POST.get("rate")
         content = request.POST.get("content")
 
         review = ReviewBarang.objects.create(barang=barang, bintang=bintang, content=content)
-        redir = f'/barang/detail/{id}'
+        redir = f'/barang/detail/{id}/#ulasan'
         return redirect(redir)
 
 
