@@ -10,29 +10,29 @@
 <div class="container min-vh-100 main-review">
     <h1><b>Tulis Review</b></h1>
     <p>Bagaimana kualitas produk ini secara keseluruhan?</p>
+    <form method="post" action=".">
+        {% csrf_token %}
         <div class="rate">
-            <input type="radio" id="star5" name="rate" value="1" />
-            <label for="star5" title="text">1 stars</label>
-            <input type="radio" id="star4" name="rate" value="2" />
-            <label for="star4" title="text">2 stars</label>
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
             <input type="radio" id="star3" name="rate" value="3" />
             <label for="star3" title="text">3 stars</label>
-            <input type="radio" id="star2" name="rate" value="4" />
-            <label for="star2" title="text">4 stars</label>
-            <input type="radio" id="star1" name="rate" value="5" />
-            <label for="star1" title="text">5 star</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+        </div><br><br>
+        <div class="row">
+    
+            <div class="mb-3">
+                <label for="ulasan" class="form-label">Berikan ulasan untuk produk ini</label>
+                <textarea class="form-control" id="ulasan" name="content" rows="3"></textarea>
+            </div>
+            <input class="btn btn-tulis fw-bold" type="submit" value="Tulis">  
+            <a href="#" class="btn btn-batal fw-bold">Batal</a>
         </div>
-<br><br>
-    <div class="row">
-    <form class="">
-        <div class="mb-3">
-            <label for="ulasan" class="form-label">Berikan ulasan untuk produk ini</label>
-            <textarea class="form-control" id="ulasan" rows="3"></textarea>
-          </div>
-        
-        <a href="{% url 'barang:detail' %}#ulasan" style="background-color: #ffffff; color: #04D4F0;" class="btn fw-bold">Batal</a>
-        <a href="{% url 'barang:detail' %}#ulasan" style="background-color: #04D4F0; color: #FFFFFF;" class="btn fw-bold">Tulis</a>
     </form>
-    </div>
 </div>
 {% endblock content %}

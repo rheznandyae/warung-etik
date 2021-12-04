@@ -8,3 +8,10 @@ class Barang(models.Model):
     stok = models.PositiveIntegerField()
     terjual = models.PositiveIntegerField()
     deskripsi = models.TextField()
+    image_url = models.TextField(default="")
+
+    def __str__(self):
+        return self.nama
+
+    def snippet(self):
+        return self.deskripsi[:150] + '...' if len(self.deskripsi) > 150 else self.deskripsi
