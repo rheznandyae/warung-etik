@@ -4,9 +4,9 @@ from admin_warung.models import Barang
 from .models import ReviewBarang
 
 def tulis(request, id):
-    
+    barang = Barang.objects.get(id=id)
     context = {
-        'id_barang':id
+        'barang':barang
     }
     if request.method == "POST":
         barang = Barang.objects.get(id=id)

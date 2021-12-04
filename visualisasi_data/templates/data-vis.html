@@ -7,7 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/css-vis.css' %}">
-
+<script src="{% static 'js/vis.js' %}"></script>
 
 {% endblock meta %}
 
@@ -15,12 +15,14 @@
 
 {% block content %}
 
-<div class="container visualisasi min-vh-100">
+<div class="container vis-wrapper min-vh-100">
 
     <h1><b>Visualisasi Data</b></h1><br>
 
-    <h2 style="text-align: center;">Berdasarkan Jenis Transaksi</h2>
-    <canvas id="myChart" width="400" height="200"></canvas>
+        <div class="visualisasi">
+            <h2 style="text-align: center;">Berdasarkan Jenis Transaksi</h2>
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
 </div>
 
 {% endblock content %}
