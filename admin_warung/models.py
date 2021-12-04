@@ -4,7 +4,6 @@ from django.db import models
 
 class Barang(models.Model):
     nama = models.CharField(max_length=100)
-    id_barang = models.IntegerField()
     harga = models.PositiveIntegerField()
     stok = models.PositiveIntegerField()
     terjual = models.PositiveIntegerField()
