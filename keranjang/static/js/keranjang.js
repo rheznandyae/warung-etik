@@ -16,7 +16,7 @@ async function update_total_harga(){
         } 
         if (item.total_item > 0){
             container.innerHTML += `
-            <a type="button" id="button-checkout" onclick="update_total_harga()" style="background-color: #38A169; color: #FFFFFF" class="btn col-7 col-md-5 mt-3 mb-3 mt-md-5 mb-md-5 fw-bold" href="/transaksi/choose-method/">
+            <a type="button" id="button-checkout" onclick="update_total_harga()" style="background-color: #38A169; color: #FFFFFF" class="btn col-7 col-md-5 mt-3 mb-3 mt-md-5 mb-md-5 fw-bold" href="/transaksi/">
                 Checkout - ${item.total_price}
             </a> 
         `
