@@ -1,5 +1,7 @@
 .main-review{
     margin-top: 20vh;
+    background-color: white;
+    padding: 3vw;
 }
 
 .rate {
@@ -40,3 +42,18 @@
 /*
 modified from: https://codepen.io/hesguru/pen/BaybqXv
 */
+
+.btn-tulis{
+    background-color: #04D4F0;
+    color: #FFFFFF;
+}
+
+.btn-batal{
+    background-color: #ffffff; 
+    color: #04D4F0;   
+}
+
+.product-image {
+    max-width: 15vh;
+    border-radius: 10px;
+}

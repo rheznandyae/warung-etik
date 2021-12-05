@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Warung Etik</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/css-review.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="container min-vh-100 main-review">
+    <h1><b>Edit Review</b></h1>
+    <img class="product-image" src="{{ barang.image_url }}" alt="">
+    <a href="{% url 'barang:detail' review.barang.id %}">{{ review.barang.nama }}</a>
+    <p>Bagaimana kualitas produk ini secara keseluruhan?</p>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div class="rate">
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+        </div><br><br>
+        <div class="row">
+    
+            <div class="mb-3">
+                <label for="ulasan" class="form-label">Berikan ulasan untuk produk ini</label>
+                <textarea class="form-control" id="ulasan" name="content" rows="3">{{ review.content }}</textarea>
+            </div>
+            <input class="btn btn-tulis fw-bold" type="submit" value="Tulis">  
+            <a href="{% url 'barang:detail' review.barang.id %}" class="btn btn-batal fw-bold">Batal</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}
