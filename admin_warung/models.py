@@ -4,14 +4,15 @@ from django.db import models
 
 class Barang(models.Model):
     nama = models.CharField(max_length=100)
-    harga = models.PositiveIntegerField()
-    stok = models.PositiveIntegerField()
-    terjual = models.PositiveIntegerField()
-    deskripsi = models.TextField()
-    image_url = models.TextField(default="")
+    harga = models.PositiveIntegerField(blank=True, null=True)
+    stok = models.PositiveIntegerField(blank=True, null=True)
+    terjual = models.PositiveIntegerField(blank=True, null=True)
+    deskripsi = models.TextField(blank=True, null=True)
+    image_url = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.nama
 
     def snippet(self):
         return self.deskripsi[:150] + '...' if len(self.deskripsi) > 150 else self.deskripsi
+
