@@ -15,4 +15,8 @@ class Barang(models.Model):
 
     def snippet(self):
         return self.deskripsi[:150] + '...' if len(self.deskripsi) > 150 else self.deskripsi
+    
+    def get_all_value(self):
+        return [field.value_from_object(self) for field in Barang._meta.fields]
+
 
