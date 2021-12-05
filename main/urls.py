@@ -8,5 +8,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
-    path('search/', views.search, name='search'),
+    path('?search=<str:search>/', views.search, name='search'),
 ]

@@ -32,9 +32,17 @@
       
       <!-- <form> -->
         <div class="btn-group" role="group">
-          <input type="text" class="form-control" id="search">
-        
-          <a href="{% url 'main:search' %}"><button class="btn btn-info ms-1">Cari</button></a>
+          <form action="" method="POST" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-auto">
+              <input type="text" class="form-control" name="search" required>
+            </div>
+
+            <div class="col-auto">
+              <button class="btn btn-info ms-1" type="submit">Cari</button>
+            </div>
+          </form>
         </div>
         <div id="help" class="form-text">masukan barang yang ingin dicari</div>
       <!-- </form> -->
