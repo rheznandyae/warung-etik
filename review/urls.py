@@ -6,4 +6,5 @@ app_name = 'review'
 
 urlpatterns = [
     path('tulis/<int:id>/', views.tulis, name='tulis'),
+    path('edit/<int:id>/', views.edit, name='edit' )
 ]

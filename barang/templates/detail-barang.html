@@ -4,6 +4,7 @@
 {% block meta %}
 <title>Warung Etik</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/css-barang.css' %}">
+{% load humanize %}
 {% endblock meta %}
 
 {% block content %}
@@ -18,7 +19,7 @@
         <h1><b>{{ barang.nama }}</b></h1>
 
         <div class="row mt-2 mb-2">
-            <h2><b>Rp. {{ barang.harga }}</b></h2>
+            <h2><b>Rp. {{ barang.harga | intcomma}}</b></h2>
         </div>
 
         <!-- JENIS
@@ -84,9 +85,7 @@
             <div class="col-12 col-lg-8 mt-2">
                 <h2>Bobi</h2>
                 <p>{{ review.date }}</p>
-                {% if request.user == review.author %}
-                <a href="{% url 'review:tulis' %}">edit</a>
-                {% endif %}
+                <a href="{% url 'review:edit' review.id %}">edit</a>
                 <p>{{ review.content }}</p>
             </div>
             {% if review.bintang == 5 %}
