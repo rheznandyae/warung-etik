@@ -1,29 +1,123 @@
 from django.http import response
 from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, parser_classes
+from admin_warung.models import Barang
+from keranjang.serializers import ItemKeranjangSerializers
+from .models import ItemKeranjang
+from rest_framework.parsers import JSONParser
+from django.contrib.auth.models import User
 
 def keranjang_view(request):
-    context = {
-        "list_barang":[
+    context={
+        'list_barang':[
             {
-                "nama" : "Indomie Rebus Ayam Bawang",
-                "keterangan" : "Mie Instant This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-                "jumlah_item" : 4,
-                "image": "https://warungmitra.com/wp-content/uploads/2021/02/indomie-ayam-bwg.jpg"
+                'nama': 'Mie Goreng',
+                'keterangan': 'Mie instant enak',
+                'jumlah_item': '20',
+                'image':'https://images.unsplash.com/photo-1638518945531-ff6290869fb2'
             },
             {
-                "nama" : "Indomie Goreng Rendang",
-                "keterangan" : "Mie Instant This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-                "jumlah_item" : 3,
-                "image": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//83/MTA-2902004/indomie_indomie-mie-goreng-rasa-rendang-91gr_full02.jpg"
-            },
-            {
-                "nama" : "Ferrero Rocher",
-                "keterangan" : "Snack Coklat This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-                "jumlah_item" : 6,
-                "image" : "https://id-test-11.slatic.net/p/5a18bd1fa94e46269f63c44e66c20ac7.jpg"
+                'nama': 'Mie Goreng',
+                'keterangan': 'Mie instant enak',
+                'jumlah_item': '20',
+                'image':'https://images.unsplash.com/photo-1638518945531-ff6290869fb2'
             }
-        ] 
+        ]
     }
+
     return render(request, 'keranjang.html', context=context)
 
-# Create your views here.
+@api_view(['GET'])
+def get_item_keranjang_by_user(request, username):
+    item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi=None)
+    item_serializer = ItemKeranjangSerializers(instance=item_keranjangs, many=True)
+    return Response(item_serializer.data)
+
+@api_view(["POST"])
+def create_item_keranjang(request):
+    username = request.data['username']
+    id_barang = request.data['id_barang']
+    jumlah_item = request.data['jumlah_item']
+    print(request.POST['jumlah_item'])
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, barang__id = id_barang, transaksi=None)
+    if not item_keranjang.exists() :
+        new_item_keranjang = ItemKeranjang(
+            pelanggan = User.objects.get(username=username),
+            barang = Barang.objects.get(id=id_barang),
+            jumlah_item = jumlah_item
+            )
+        new_item_keranjang.save()
+    else:
+        print("udah ada dude")
+    return Response(request.data)
+    
+@api_view(['POST'])
+def plus1_amount_item_keranjang(request):
+    id_keranjang = request.data['id_keranjang']
+    item_keranjang = ItemKeranjang.objects.get(id = id_keranjang)
+
+    item_keranjang.jumlah_item += 1
+    item_keranjang.save()
+    item_serializer = ItemKeranjangSerializers(instance=item_keranjang)
+
+    return Response(item_serializer.data)
+
+@api_view(['POST'])
+def minus1_amount_item_keranjang(request):
+    id_keranjang = request.data['id_keranjang']
+
+    item_keranjang = ItemKeranjang.objects.get(id = id_keranjang)
+
+    item_keranjang.jumlah_item -= 1
+    
+    if item_keranjang.jumlah_item > 0 :
+        item_keranjang.save()
+    else :
+        ItemKeranjang.objects.get(id = item_keranjang.id).delete()
+    item_serializer = ItemKeranjangSerializers(instance=item_keranjang)
+
+    return Response(item_serializer.data)
+
+@api_view(['GET','DELETE'])
+def item_keranjang_detail(request, id_keranjang):
+
+    if request.method == 'GET':
+        item_keranjang = ItemKeranjang.objects.get(id = id_keranjang)
+        item_serializer = ItemKeranjangSerializers(instance=item_keranjang)
+
+        return Response(item_serializer.data)
+
+    if request.method == 'DELETE':
+    # id_keranjang = request.data['id_keranjang']
+        ItemKeranjang.objects.filter(id = id_keranjang).delete()
+        return Response({"message": "delete item {}".format(id_keranjang)})
+
+@api_view(['GET'])
+def get_total_price(request,username):
+    item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=None)
+
+    total_item = 0
+    total_price = 0
+    for item in item_keranjangs:
+        total_item += 1
+        total_price += item.jumlah_item * item.barang.harga
+
+    return Response({
+        'total_price' : total_price,
+        'total_item' : total_item
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
