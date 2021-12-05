@@ -21,52 +21,20 @@
 
         <div class="visualisasi">
             <h2 style="text-align: center;">Berdasarkan Jenis Transaksi</h2>
-            <canvas id="myChart" width="400" height="200"></canvas>
+            <canvas id="transaksi_piechart" width="400" height="200"></canvas>
+        </div>
+
+        <div class="visualisasi">
+            <h2 style="text-align: center;">Jumlah Penjualan</h2>
+            <canvas id="jumlah_penjualan" width="400" height="200"></canvas>
         </div>
 </div>
 
 {% endblock content %}
 
 {% block script %}
-<script>
-    // jquery function
-    $(document).ready(function(){
-            var ctx = document.getElementById('myChart').getContext('2d');
-            console.log(ctx);
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: [{%for data in qs%}'{{data.jenis_transaksi}}',{%endfor%}], //loop through queryset, 
-                    datasets: [{
-                        label: '# of users', 
-                        data: [{%for data in qs%}{{data.num_users}},{%endfor%}],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)', 
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }],
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-    });
-        });
-    </script>
+
+{% include 'snippets/jenis_transaksi.html' %}
+{% include 'snippets/jumlah_penjualan.html' %}
+
 {% endblock script %}
