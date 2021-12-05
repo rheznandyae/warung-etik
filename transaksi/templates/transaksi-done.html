@@ -19,7 +19,8 @@
             <div class="margin-card">
 
                 <section class="content-main">
-                    <h4 class="mt-4">status pemesanan : transaksi selesai</h4>
+                    <h4 class="mt-4">status pemesanan : {{ transaksi.statusTransaksi }}</h4>
+                    <h4 class="mt-4">ID transaksi : {{ transaksi.idTransaksi }}</h4>
                 </section>
                 
                 <section class="content-main">
@@ -57,7 +58,7 @@
                 <section class="content-main">
                     <h3>total pesanan</h3>
 
-                    <h5 class="mt-3">rp. 27.500</h5>
+                    <h5 class="mt-3">rp. {{ transaksi.totalPesanan }}</h5>
                 </section>
                 
             </div>

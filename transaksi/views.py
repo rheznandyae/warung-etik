@@ -47,24 +47,75 @@ def pembayaran(request):
 
         # print(newID)
     
-        return redirect('transaksi:transaksiBayar')
+        return redirect('transaksi:transaksiChecker', id = newID)
+        # return redirect('/transaksi/temp/?id=' + newID + '/')
     
     context = {}
-    return render(request, 'pembayaran.html', context=context)
+    return render(request, 'pembayaran.html', context)
 
-def transaksiBayar(request):
-    context = {}
-    return render(request, 'transaksi-bayar.html', context=context)
+
+def transaksiChecker(request, id):
+
+    TR = Transaksi.objects.get(idTransaksi = id)
+
+    context = {'transaksi':TR}
+
+    if request.method == 'POST':
+        
+        action = request.POST.get('action')
+
+        if action == 'konfirmasi':
+            TR.statusTransaksi = 'menunggu konfirmasi admin'
+
+            TR.save()
+
+            print('tested tit')
+
+            return render(request, 'transaksi-konfirm.html', context)
+
+        elif action == 'batal':
+            TR.statusTransaksi = 'transaksi dibatalkan'
+
+            TR.save()
+
+            print('tested tot')
+
+            return render(request, 'transaksi-done.html', context)
+
+    if request.method == 'GET':
+
+        status = TR.statusTransaksi
+
+        if status == 'menunggu konfirmasi pembayaran':
+            return render(request, 'transaksi-bayar.html', context)
+
+        elif status == 'menunggu konfirmasi admin':
+            return render(request, 'transaksi-konfirm.html', context)
+
+        else:
+            return render(request, 'transaksi-done.html', context)
+
+
+
+
+
+
+
+def transaksiBayar(request, ID):
+
+    TR = Transaksi.objects.get(idTransaksi = ID)
+
+    context = {'transaksi':TR}
+    return render(request, 'transaksi-bayar.html', context)
 
 def transaksiKonfirm(request):
     context = {}
-    return render(request, 'transaksi-konfirm.html', context=context)
+    return render(request, 'transaksi-konfirm.html', context)
 
 def transaksiDone(request):
     context = {}
-    return render(request, 'transaksi-done.html', context=context)
+    return render(request, 'transaksi-done.html', context)
 
 def transaksiFailTemp(request):
     context = {}
-    return render(request, 'transaksi-failtemp.html', context=context)
-
+    return render(request, 'transaksi-failtemp.html', context)
