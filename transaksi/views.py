@@ -53,7 +53,7 @@ def pembayaran(request):
         newTR.save()
 
         set_item_keranjang_tr(username, newTR)
-        set_jumlah_barang(username, newTR)
+        set_jumlah_barang_minus(username, newTR)
     
         return redirect('transaksi:transaksiChecker', id = newID)
 
@@ -61,7 +61,7 @@ def pembayaran(request):
 
     context['items'] = get_items(username)
 
-    print(context)
+    # print(context)
 
     return render(request, 'pembayaran.html', context)
 
@@ -76,7 +76,7 @@ def transaksiChecker(request, id):
 
     context['items'] = get_items_by_tr(username, TR)
 
-    print(context)
+    # print(context)
 
     if request.method == 'POST':
         
@@ -87,16 +87,18 @@ def transaksiChecker(request, id):
 
             TR.save()
 
-            print('tested tit')
+            # print('tested tit')
 
             return render(request, 'transaksi-konfirm.html', context)
 
         elif action == 'batal':
+            set_jumlah_barang_plus(username, TR)
+
             TR.statusTransaksi = 'transaksi dibatalkan'
 
             TR.save()
 
-            print('tested tot')
+            # print('tested tot')
 
             return render(request, 'transaksi-done.html', context)
 
@@ -111,6 +113,7 @@ def transaksiChecker(request, id):
             return render(request, 'transaksi-konfirm.html', context)
 
         else:
+            print(context)
             return render(request, 'transaksi-done.html', context)
 
 
@@ -132,7 +135,7 @@ def get_items(username):
 
     context.append(['totalPesanan', total_price])
 
-    print(context)
+    # print(context)
 
     return context
 
@@ -170,20 +173,29 @@ def get_total_pesanan(username):
     return total_price
 
 def set_item_keranjang_tr(username, tr):
-    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=None)
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi = None)
 
     for item in item_keranjang:
-        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang)
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = None)
         item.transaksi = tr
         item.save()
 
-def set_jumlah_barang(username, tr):
-    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=tr)
+def set_jumlah_barang_minus(username, tr):
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi = tr)
 
     for item in item_keranjang:
-        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang)
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = tr)
         barang = item.barang
         barang.stok = barang.stok - item.jumlah_item
+        barang.save()
+
+def set_jumlah_barang_plus(username, tr):
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi = tr)
+
+    for item in item_keranjang:
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = tr)
+        barang = item.barang
+        barang.stok = barang.stok + item.jumlah_item
         barang.save()
 
 
