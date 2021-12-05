@@ -4,6 +4,7 @@
 {% block meta %}
 <title>Warung Etik</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/css-barang.css' %}">
+{% load humanize %}
 {% endblock meta %}
 
 {% block content %}
@@ -12,15 +13,16 @@
 
     <div class="row">
       <div class="col-12 col-lg-6 mt-5">
-        <img class="rounded-3 shadow img-fluid" src="https://images.tokopedia.net/img/cache/900/product-1/2020/2/19/47871595/47871595_b6aa9df0-846b-4846-95d1-940248340634_1000_1000" alt="">
+        <img class="rounded-3 shadow img-fluid" src="{{ barang.image_url }}" alt="">
       </div>
       <div class="col col-12 col-lg-6 mt-5">
-        <h1><b>Indomie Goreng</b></h1>
+        <h1><b>{{ barang.nama }}</b></h1>
 
         <div class="row mt-2 mb-2">
-            <h2><b>Rp. 2500</b></h2>
+            <h2><b>Rp. {{ barang.harga | intcomma}}</b></h2>
         </div>
 
+        <!-- JENIS
         <h3>Jenis: </h3>
 
         <div class="mt-2 mb-5">
@@ -42,7 +44,7 @@
                 <label class="btn btn-outline-secondary" for="btnradio5">Pedas</label>
             </div>
         </div>
-
+        -->
         <div class="row mt-5">
             <h3 class="align-text-bottom">Jumlah:</h3>
         </div>
@@ -65,8 +67,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-lg-12">
-        <p>Mie instan goreng yang terbuat dari tepung terigu berkualitas dengan paduan rempah-rempah pilihan terbaik, Indomie Goreng diproses dengan higienis menggunakan standar internasional dan teknologi berkualitas tinggi sehingga menghasilkan mie instant dengan tekstur dan rasa yang disukai semua orang.
-            Juga dilengkapi tambahan fortifikasi mineral dan vitamin A, B1, B6, B12, Niasin, Asam Folat & Mineral Zat Besi yang dibutuhkan tubuh. Nikmati Indomie Goreng lezat berpadu dengan bawang goreng renyah dan saus cabe mantap untuk menemani Anda di kala lapar. Cocok untuk disantap dalam segala waktu dan suasana.
+        <p>{{ barang.deskripsi|linebreaks }}
         </p>
         </div>
     </div>
@@ -76,13 +77,18 @@
     </div>
 
     <div>
+        {% for review in barang.reviews.all %}
+
         <div class="row mb-3">
             <div class="col-2 col-lg-1"><img class="rounded-3 shadow img-fluid mt-2" src="https://secure.gravatar.com/avatar/141270ad849615ed6de6d0824d4895ec?s=400&d=mm&r=g" alt="">
             </div>
             <div class="col-12 col-lg-8 mt-2">
-                <h2>Bobi</h2><a href="{% url 'review:tulis' %}">edit</a>
-                <p>Widih keren banget warung etik emang! Beli di sini lagi nanti ah. Memang developernya debest parah dah pokonya11 ...</p>
+                <h2>Bobi</h2>
+                <p>{{ review.date }}</p>
+                <a href="{% url 'review:edit' review.id %}">edit</a>
+                <p>{{ review.content }}</p>
             </div>
+            {% if review.bintang == 5 %}
             <div class="col-6 col-lg-2 mt-2 stars">
                 <span class="material-icons">star</span>
                 <span class="material-icons">star</span>
@@ -90,16 +96,31 @@
                 <span class="material-icons">star</span>
                 <span class="material-icons">star</span>
             </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-2 col-lg-1"><img class="rounded-3 shadow img-fluid mt-2" src="https://secure.gravatar.com/avatar/141270ad849615ed6de6d0824d4895ec?s=400&d=mm&r=g" alt="">
+            {% elif review.bintang == 4 %}
+            <div class="col-6 col-lg-2 mt-2 stars">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star_outline</span>
             </div>
-            <div class="col-12 col-lg-8 mt-2">
-                <h2>Con</h2>
-                <p>udah basi</p>
+            {% elif review.bintang == 3 %}
+            <div class="col-6 col-lg-2 mt-2 stars">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star_outline</span>
+                <span class="material-icons">star_outline</span>
             </div>
+            {% elif review.bintang == 2 %}
+            <div class="col-6 col-lg-2 mt-2 stars">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star_outline</span>
+                <span class="material-icons">star_outline</span>
+                <span class="material-icons">star_outline</span>
+            </div>
+            {% else %}
             <div class="col-6 col-lg-2 mt-2 stars">
                 <span class="material-icons">star</span>
                 <span class="material-icons">star_outline</span>
@@ -107,10 +128,14 @@
                 <span class="material-icons">star_outline</span>
                 <span class="material-icons">star_outline</span>
             </div>
+            {% endif %}
         </div>
+        {% empty %}
+        <h2>Belum ada ulasan untuk barang ini.</h2>
+        {% endfor %}
 
         <div class="row mb-5">
-            <a href="{% url 'review:tulis'%}" class="btn-review btn btn-info btn-lg mt-5 pos-hero"><span>Tulis Review</span></a>
+            <a href="{% url 'review:tulis' id=barang.id %}" class="btn-review btn btn-info btn-lg mt-5 pos-hero"><span>Tulis Ulasan</span></a>
         </div>
     </div>
 </div>
