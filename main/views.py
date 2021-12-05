@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import CreateUserForm
-
+from admin_warung.models import Barang
 
 def home(request):
-    return render(request, 'main/home.html')
+    list_barang = Barang.objects.all()
+
+    return render(request, 'main/home.html', {'list_barang':list_barang})
 
 def loginUser(request):
     nextUrl = request.GET.get('next', '')
