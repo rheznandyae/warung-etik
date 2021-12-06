@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'main',
     'barang',
     'chat',
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
     'transaksi',
     'admin_warung',
     'review',
-    'visualisasi_data'
+    'visualisasi_data',
 ]
 
 MIDDLEWARE = [
@@ -152,6 +153,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': []
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

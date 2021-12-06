@@ -42,63 +42,20 @@
       
     </div>
 
+    
     <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for barang in list_barang %}
       <div class="col">
         <div class="card h-100">
-          <a href="{% url 'barang:detail' %}">
-          <img src="https://images.tokopedia.net/img/cache/900/product-1/2020/2/19/47871595/47871595_b6aa9df0-846b-4846-95d1-940248340634_1000_1000" class="card-img-top" alt="...">
+          <img src="{{ barang.image_url }}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Indomie Goreng</h5></a>
-            <p class="card-text">Mie instan goreng yang terbuat dari tepung terigu berkualitas.
-            </p>
+            <h5 class="card-title">{{ barang.nama }}</h5>
+            <p class="card-text">{{ barang.snippet }}</p>
+            <a class="stretched-link" href="{% url 'barang:detail' barang.id %}"></a>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a short card.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.btklsby.go.id/images/placeholder/basic.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
