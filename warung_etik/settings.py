@@ -88,9 +88,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'warung_etik.wsgi.application'
-ASGI_APPLICATION = 'warung_etik.asgi.application'
+ASGI_APPLICATION = "warung_etik.asgi.application"
 
-# TODO: make conditions for productions
+# Channels for chat, TODO change param for deployment.
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
