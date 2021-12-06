@@ -13,31 +13,24 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Nama Barang</th>
-                <th scope="col"></th>
+                <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
+              {% for barang in barangs %}
               <tr>
-                <th scope="row">1</th>
-                <td>Indomie Goreng</td>
-                <td><a href="{% url 'admin_warung:ubah-barang' %}" class="btn btn-outline-info">Ubah</a></td>
+                <th scope="row">{{barang.id}}</th>
+                <td>{{barang.nama}}</td>
+                <td><a href="{% url 'admin_warung:ubah-barang' barang.id %}" class="btn btn-outline-info">Ubah</a></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Indomie Kuah</td>
-                <td><a href="{% url 'admin_warung:ubah-barang' %}" class="btn btn-outline-info">Ubah</a></td>
-              </tr>              <tr>
-                <th scope="row">3</th>
-                <td>Indomie Aceh</td>
-                <td><a href="{% url 'admin_warung:ubah-barang' %}" class="btn btn-outline-info">Ubah</a></td>
-              </tr>
+              {% endfor %}
 
             </tbody>
           </table>
           <div class="text-center" style="padding-top: 25px;">
-              <a class="btn btn-secondary" style="background-color: #38A169; color: #FFFFFF" href="{% url 'admin_warung:dashboard' %}" role="button">Kembali</a>
+              <a class="btn btn-secondary" href="{% url 'admin_warung:dashboard' %}" role="button">Kembali</a>
           </div>
 </div>
 {% endblock content %}

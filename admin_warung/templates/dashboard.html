@@ -104,26 +104,19 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Nama Barang</th>
                 <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
+              {% for barang in barangs %}
               <tr>
-                <th scope="row">1</th>
-                <td>Indomie Goreng</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
+                <th scope="row">{{barang.id}}</th>
+                <td>{{barang.nama}}</td>
+                <td><a href="{% url 'admin_warung:detail-barang-admin' barang.id %}" class="btn btn-outline-info">Detail</a></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Indomie Kuah</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
-              </tr>              <tr>
-                <th scope="row">3</th>
-                <td>Indomie Aceh</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
-              </tr>
+              {% endfor %}
 
             </tbody>
           </table>
