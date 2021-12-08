@@ -35,7 +35,7 @@ def check(request):
             )
             new_room.save()
             r = Room.objects.get(user1=request.user)
-            rn = r.name
+        rn = r.name
         return redirect('chat:room', room_name=rn)
     
     
