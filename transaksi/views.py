@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.template.response import ContentNotRenderedError
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import Transaksi
 
@@ -12,8 +13,11 @@ from keranjang.models import ItemKeranjang
 
 
 def pembayaran(request):
-
     username = request.user.username
+    item_not_available = validate_is_barang_available(username)
+    if item_not_available:
+        messages.error(request, "{} not available".format(", ".join(item_not_available)))
+        return redirect('/keranjang/') 
     
     if request.method == 'POST':
 
@@ -116,6 +120,16 @@ def transaksiChecker(request, id):
             print(context)
             return render(request, 'transaksi-done.html', context)
 
+def validate_is_barang_available(username):
+    item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi=None)
+    item_not_available = []
+    for item in item_keranjangs:
+        jumlah_stok = item.barang.stok
+        jumlah_permintaan = item.jumlah_item
+        if jumlah_stok < jumlah_permintaan:
+            item_not_available.append(item.barang.nama)
+
+    return item_not_available
 
 def get_items(username):
     context = []

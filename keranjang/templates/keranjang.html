@@ -21,6 +21,16 @@
 
     
 </div>
+{% for message in messages %}
+        <script type="text/javascript" >
+            var message = "{{message}}";
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Barang Tidak Tersedia',
+                        text: `${message}`,
+                    })
+        </script>
+{% endfor %}
 <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script src="{% static 'js/keranjang.js' %}"></script>
 

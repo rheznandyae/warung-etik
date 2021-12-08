@@ -11,32 +11,36 @@
 <body>
     <div class="dashboard container min-vh-100">
         <h2><b>Tambah Barang</b></h2>
-        <form method="POST">
+        <form method="POST" action="">
             {% csrf_token %}
             <table class="w-100">
                 <tr>
-                    <td><b>Nama</b></td>
-                    <td><input type="text" class="form-control" id="nama"></td>
+                    <td style="vertical-align: top; width: 170px;"><b><label for="nama" class="form-label">Nama</label></b></td>
+                    <td><input type="text" class="form-control" id="nama" name="nama" required></td>
                 </tr>
                 <tr>
-                    <td><b>Stok</b></td>
-                    <td><input type="text" class="form-control" id="stok"></td>
+                    <td><b><label for="harga" class="form-label">Harga</label></b></td>
+                    <td><input type="text" class="form-control" id="harga" name="harga" required></td>
                 </tr>
                 <tr>
-                    <td><b>Jumlah Terjual</b></td>
-                    <td><input type="text" class="form-control" id="terjual"></td>
+                    <td><b><label for="stok" class="form-label">Stok</label></b></td>
+                    <td><input type="text" class="form-control" id="stok" name="stok" required></td>
                 </tr>
                 <tr>
-                    <td style="vertical-align: top;"><b>Deskripsi</b></td>
-                    <td><textarea name="deskripsi" cols="40" rows="5" id="deskripsi"></textarea></td>
+                    <td><b><label for="terjual" class="form-label">Jumlah Terjual</label></b></td>
+                    <td><input type="text" class="form-control" id="terjual" name="terjual"></td>
                 </tr>
                 <tr>
-                    <td><b>Gambar</b></td>
-                    <td>{{form.gambar}}</td>
+                    <td style="vertical-align: top; width: 170px;"><b><label for="deskripsi" class="form-label">Deskripsi</label></b></td>
+                    <td><textarea class="form-control" name="deskripsi" cols="40" rows="5" id="deskripsi"></textarea></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 170px;"><b><label for="image_url" class="form-label">Gambar</label></b></td>
+                    <td><textarea class="form-control" name="image_url" cols="100" rows="2" id="image_url"></textarea></td>
                 </tr>
             </table>
             <div class="text-center" style="padding-top: 25px;">
-                <button type="submit" class="btn btn-primary">Tambahkan</button>
+                <button type="submit" class="btn btn-primary">Tambah</button>
                 <a class="btn btn-secondary" href="{% url 'admin_warung:dashboard' %}" role="button">Kembali</a>
             </div>
         </form>
