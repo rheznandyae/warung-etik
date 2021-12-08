@@ -12,7 +12,8 @@ User = get_user_model()
 class ChatConsumer(WebsocketConsumer):
     
     def fetch_messages(self, data):
-        messages = Message.last_25_messages()
+        print(data)
+        messages = Message.last_15_messages(data['room'])
         content = {
             'command': 'messages',
             'messages' : self.messages_to_json(messages)
@@ -21,7 +22,7 @@ class ChatConsumer(WebsocketConsumer):
         self.send_message(content)
     
     def new_message(self, data):
-        author = data['from']
+        author = data['author']
         author_user = User.objects.filter(username=author)[0]
         
         message = Message(author=author_user,
@@ -48,7 +49,6 @@ class ChatConsumer(WebsocketConsumer):
 
     def message_to_json(self, message):
         return {
-            # 'id': message.id,
             'author': message.author.username,
             'content': message.content,
             'timestamp': str(message.timestamp)
