@@ -96,10 +96,13 @@
             <div class="col-2 col-lg-1"><img class="rounded-3 shadow img-fluid mt-2" src="https://secure.gravatar.com/avatar/141270ad849615ed6de6d0824d4895ec?s=400&d=mm&r=g" alt="">
             </div>
             <div class="col-12 col-lg-8 mt-2">
-                <h2>Bobi</h2>
+                <h2>{{ review.author }}</h2>
                 <p>{{ review.date }}</p>
+                {% if request.user == review.author %}
                 <a href="{% url 'review:edit' review.id %}">edit</a>
+                {% endif %}
                 <p>{{ review.content }}</p>
+                
             </div>
             {% if review.bintang == 5 %}
             <div class="col-6 col-lg-2 mt-2 stars">
@@ -144,12 +147,14 @@
             {% endif %}
         </div>
         {% empty %}
-        <h2>Belum ada ulasan untuk barang ini.</h2>
+        <h2 class="mb-5">Belum ada ulasan untuk barang ini.</h2>
         {% endfor %}
-
+        {% if user.is_authenticated and alreadyWrote == False %}
         <div class="row mb-5">
             <a href="{% url 'review:tulis' id=barang.id %}" class="btn-review btn btn-info btn-lg mt-5 pos-hero"><span>Tulis Ulasan</span></a>
         </div>
+        {% else %}
+        {% endif %}
     </div>
 </div>
 {% endblock content %}
