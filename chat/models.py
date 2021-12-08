@@ -43,7 +43,11 @@ class Message(models.Model):
         return self.author.username
     
     def last_15_messages(room_name):
-        res = Message.objects.filter(room=room_name).order_by('timestamp')[:15]
-        return Message.objects.order_by('timestamp').all()[:15]
+        try:
+            current_room = Room.objects.get(name=room_name)
+            return Message.objects.filter(room=current_room).order_by('timestamp')[:15]
+        except Room.DoesNotExist:
+            return None
+        
     
 

@@ -1,15 +1,25 @@
 var roomName = JSON.parse(document.getElementById('room_name').textContent)
 var username = JSON.parse(document.getElementById('username').textContent)
 
-var test  = 'test';
+var wsStart = (location.protocol === https) ? 'wss://' : 'ws://'
 
 var chatSocket = new ReconnectingWebSocket(
-    'ws://'
+    wsStart
     + window.location.host
     + '/ws/chat/room/'
     + roomName
     + '/'
 );
+
+if (location.protocol === 'https') {
+    chatSocket = new ReconnectingWebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/room/'
+        + roomName
+        + '/'
+    );
+}
 
 chatSocket.onopen = function(e) {
     fetchMessages();
@@ -62,10 +72,6 @@ function createMessage(data) {
     var author = data.author;
     var timestamp = data.timestamp;
 
-    console.log(message);
-    console.log(author);
-    console.log(timestamp);
-
     // Creating html for message
     var liMsg = document.createElement('li');
     var div1Msg = document.createElement('div');
@@ -78,11 +84,9 @@ function createMessage(data) {
     spanMsg.className = "message-data-time";
 
     if (author === username) {
-        console.log('yes');
         div1Msg.className = 'message-data';
         div2Msg.className = 'message my-message';
     } else {
-        console.log('no');
         div1Msg.className = 'message-data d-flex justify-content-end';
         div2Msg.className = 'message other-message float-right';  
     }

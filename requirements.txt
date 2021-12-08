@@ -21,10 +21,7 @@ hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0
 msgpack==1.0.3
-<<<<<<< HEAD
-=======
 openpyxl==3.0.9
->>>>>>> 0d07b528e4737f0686495ba90caa0b3faa446390
 psycopg2-binary==2.9.2
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -36,7 +33,7 @@ service-identity==21.1.0
 six==1.16.0
 sqlparse==0.4.2
 Twisted==21.7.0
-twisted-iocpsupport==1.0.2
+# twisted-iocpsupport==1.0.2
 txaio==21.2.1
 typing_extensions==4.0.0
 urllib3==1.26.7
