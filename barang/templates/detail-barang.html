@@ -22,29 +22,6 @@
             <h2><b>Rp. {{ barang.harga | intcomma}}</b></h2>
         </div>
 
-        <!-- JENIS
-        <h3>Jenis: </h3>
-
-        <div class="mt-2 mb-5">
-
-            <div class="btn-group flex-wrap" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-secondary" for="btnradio1">Original</label>
-              
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="btnradio2">Rendang</label>
-              
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="btnradio3">Jumbo</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="btnradio4">Aceh</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="btnradio5">Pedas</label>
-            </div>
-        </div>
-        -->
         <div class="row mt-2">
             <div class="col">
                 <p>Stok tersedia: {{ barang.stok }}</p>
@@ -64,13 +41,18 @@
 
         <div class="row">
             <div class="btn-group btn-quantity" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-secondary"><b>-</b></button>
-                <button type="button" class="" style="width: 90vw; border: 0; cursor: default;"><b>0</b></button>
-                <button type="button" class="btn btn-secondary"><b>+</b></button>
+                <button type="button" onclick="decrement()" class="btn btn-secondary"><b>-</b></button>
+                <button type="button" style="width: 90vw; border: 0; cursor: default;"><h3 id="counting">1</h3></button>
+                <button type="button" onclick="increment()" class="btn btn-secondary"><b>+</b></button>
             </div>
         </div>
         <div class="row">
-            <a href="{% url 'keranjang:keranjang' %}" class=" btn-tambah btn btn-info btn-lg mt-5 pos-hero"><span>Tambahkan ke keranjang</span></a>
+            <form action="{% url 'keranjang:createItemKeranjang' %}" method="post">
+                <input type="text" name="username" value="{{ request.user.username }}" hidden>
+                <input type="text" name="id_barang" value="{{ barang.id }}" hidden>
+                <input id="valueCount" type="text" name="jumlah_item" value="1" hidden>
+                <button type="submit" class="btn-tambah btn btn-info btn-lg mt-5">Tambahkan ke keranjang</button>
+            </form>
         </div>
     </div>
     </div>
@@ -149,7 +131,7 @@
         {% empty %}
         <h2 class="mb-5">Belum ada ulasan untuk barang ini.</h2>
         {% endfor %}
-        {% if user.is_authenticated and alreadyWrote == False %}
+        {% if user.is_authenticated and alreadyWrote == False and bought == True %}
         <div class="row mb-5">
             <a href="{% url 'review:tulis' id=barang.id %}" class="btn-review btn btn-info btn-lg mt-5 pos-hero"><span>Tulis Ulasan</span></a>
         </div>
@@ -157,4 +139,26 @@
         {% endif %}
     </div>
 </div>
+{% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <script type="text/javascript" >
+            var message = "{{message}}";
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: `${message}`,
+                    })
+        </script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <script type="text/javascript" >
+            var message = "{{message}}";
+            Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: `${message}`,
+                    })
+        </script>
+    {% endif %}
+{% endfor %}
+<script src="{% static 'js/detail-barang.js' %}"></script>
 {% endblock content %}

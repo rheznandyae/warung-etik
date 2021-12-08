@@ -4,6 +4,7 @@
 {% block meta %}
 <title>Warung Etik</title>
 <link rel="stylesheet" href="{% static 'css/style-transaksi.css' %}" />
+{% load humanize %}
 {% endblock meta %}
 
 {% block content %}
@@ -29,7 +30,7 @@
                                     <h4 class="card-title">WarungEtik</h4>
                                     
                                     <h5 class="card-text mt-3">no. rekening : 12345xxxx</h5>
-                                    <h5 class="card-text mt-2 mb-2">nominal transfer : rp. {{ transaksi.totalPesanan }}</h5>
+                                    <h5 class="card-text mt-2 mb-2">nominal transfer : rp. {{ transaksi.totalPesanan |intcomma}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
 
                         <div class="col-md-8">
                             <h4 class="mt-1">{{ n.0 }}</h4>
-                            <h5 class="mid-align">rp. {{ n.1 }}</h5>
+                            <h5 class="mid-align">rp. {{ n.1 |intcomma}}</h5>
                             <h5 class="bottom-align">jumlah barang : {{ n.2 }}</h5>
                         </div>
                         

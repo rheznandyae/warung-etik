@@ -28,18 +28,30 @@
             <input type="hidden" name="next" value="{{ request.GET.next }}"/>
             <!-- <a href="{% url 'admin_warung:dashboard' %}">admin ></a> -->
         </form>
-
-        {% for message in messages %}
-			<p id="messages">{{message}}</p>
-		{% endfor %}	
-
-
-
-
-
     </div>
-
 </div>
+
+{% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <script type="text/javascript" >
+            var message = "{{message}}";
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: `${message}`,
+                    })
+        </script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <script type="text/javascript" >
+            var message = "{{message}}";
+            Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: `${message}`,
+                    })
+        </script>
+    {% endif %}
+{% endfor %}
 
 {% endblock content %}
 
@@ -75,12 +87,7 @@
 				   			</div>
 					</form>
 
-				</div>
-
-				{% for message in messages %}
-					<p id="messages">{{message}}</p>
-				{% endfor %}			
-		
+				</div>		
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
 						Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>

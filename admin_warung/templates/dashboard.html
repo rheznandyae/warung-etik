@@ -4,7 +4,7 @@
 {% block meta %}
 <title>Welcome Admin</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/css_admin.css' %}">
-
+{% load humanize %}
 {% endblock meta %}
 
 {% block content %}
@@ -85,7 +85,7 @@
                 <td scope="row"><b>{{ tr.0 }}</b></td>
                 <td>{{ tr.1 }}</td>
                 <td>{{ tr.2 }}</td>
-                <td>{{ tr.3 }}</td>
+                <td>Rp. {{ tr.3 |intcomma}}</td>
                 <td>{{ tr.4 }}</td>
                 <td>{{ tr.5 }}</td>
                 <td>

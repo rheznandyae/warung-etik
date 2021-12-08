@@ -35,7 +35,7 @@ def loginUser(request):
                     return redirect('../') # isi stringnya dengan url dashboard
                 return redirect(nextUrl) # isi string nya dengan next
             else:
-                messages.info(request, 'Username or password is incorrect')
+                messages.error(request, 'Username or password is incorrect')
         response = {}
         return render(request, 'main/login.html', response)
     

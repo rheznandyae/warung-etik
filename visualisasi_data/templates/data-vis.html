@@ -2,13 +2,10 @@
 {% load static %}
 
 {% block meta %}
+{% load humanize %}
 <title>Ubah Barang</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/css-vis.css' %}">
-<script src="{% static 'js/vis.js' %}"></script>
-
 {% endblock meta %}
 
 
@@ -19,6 +16,11 @@
     <a href="{% url 'admin_warung:dashboard' %}" class="btn btn-info fw-bold">Dashboard</a>
 
     <h1><b>Visualisasi Data</b></h1><br>
+        <div class="visualisasi">
+            <h2 style="text-align: center;">Total Pemasukan</h2>
+            <h3 style="text-align: center;">Rp. {{ pemasukan |intcomma}}</h3>
+            <canvas id="total_pemasukan" width="400" height="200"></canvas>
+        </div>
 
         <div class="visualisasi">
             <h2 style="text-align: center;">Berdasarkan Cara Pembayaran</h2>
@@ -34,19 +36,17 @@
             <h2 style="text-align: center;">Jumlah Penjualan</h2>
             <canvas id="jumlah_penjualan" width="400" height="200"></canvas>
         </div>
-        <div class="visualisasi">
-            <h2 style="text-align: center;">Total Pemasukan</h2>
-            <canvas id="total_pemasukan" width="400" height="200"></canvas>
-        </div>
 </div>
 
 {% endblock content %}
 
 {% block script %}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+<script src="{% static 'js/vis.js' %}"></script>
+{% include 'snippets/total_pemasukan.html' %}
 {% include 'snippets/jenis_transaksi.html' %}
 {% include 'snippets/jumlah_per_status_transaksi.html' %}
 {% include 'snippets/jumlah_penjualan.html' %}
-{% include 'snippets/total_pemasukan.html' %}
+
 
 {% endblock script %}
