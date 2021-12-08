@@ -57,33 +57,26 @@
                 <section class="content-main">
                     <h3>detil pesanan</h3>
 
-                    <div class="row mt-2">
+                {% for n in items %}
+
+                {% if n.0 != 'totalPesanan' %}
+                    <div class="row mt-3 mb-1">
 
                         <div class="col-md-4">
-                            <img class="img-barang" src="https://cf.shopee.co.id/file/64a464eea863fd5c110dc035c43c946b" alt="indomie">
+                            <img class="img-barang" src="{{ n.3 }}" alt="{{ n.0 }}">
                         </div>
 
                         <div class="col-md-8">
-                            <h4 class="top-align">indomie goreng</h4>
-                            <h5 class="mid-align">rp. 2.500</h5>
-                            <h5 class="bottom-align">jumlah barang : 5</h5>
+                            <h4 class="mt-1">{{ n.0 }}</h4>
+                            <h5 class="mid-align">rp. {{ n.1 }}</h5>
+                            <h5 class="bottom-align">jumlah barang : {{ n.2 }}</h5>
                         </div>
                         
                     </div>
+                {% endif %}
 
-                    <div class="row mt-2">
-
-                        <div class="col-md-4">
-                            <img class="img-barang" src="https://cf.shopee.co.id/file/64a464eea863fd5c110dc035c43c946b" alt="indomie">
-                        </div>
-
-                        <div class="col-md-8">
-                            <h4 class="top-align">indomie goreng</h4>
-                            <h5 class="mid-align">rp. 2.500</h5>
-                            <h5 class="bottom-align">jumlah barang : 5</h5>
-                        </div>
-                        
-                    </div>
+                {% endfor %}
+                
                 </section>
                 
             </div>
