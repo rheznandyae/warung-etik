@@ -12,5 +12,6 @@ urlpatterns = [
     path('ubah-barang/<int:id>/', views.ubah_barang_view, name='ubah-barang'),
     path('list-ubah', views.list_ubah_view, name='list-ubah'),
     path('list-hapus', views.list_hapus_view, name='list-hapus'),
-    path('import-barang', views.import_barang, name='import-barang')
+    path('import-barang', views.import_barang, name='import-barang'),
+    path('export-barang', views.download, name='export-barang'),
 ]
