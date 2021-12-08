@@ -3,10 +3,10 @@
     const total_pemasukan= new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [{%for data in barang%}'{{ data.nama }}',{%endfor%}],
+            labels: [{% for data in income %}'{{ data.nama }}',{%endfor%}],
             datasets: [{
-                label: 'Penjualan per Barang',
-                data: [{%for data in barang%}{{ data.terjual }} * {{ data.harga }},{%endfor%}],
+                label: 'Income per Barang',
+                data: [{% for data in income %}{{ data.income }},{%endfor%}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

@@ -1,6 +1,6 @@
 <script>
-    const ctx = document.getElementById('jumlah_penjualan').getContext('2d');
-    const jumlah_penjualan= new Chart(ctx, {
+    const ctx1 = document.getElementById('jumlah_penjualan').getContext('2d');
+    const jumlah_penjualan= new Chart(ctx1, {
         type: 'bar',
         data: {
             labels: [{%for data in barang%}'{{ data.nama }}',{%endfor%}],

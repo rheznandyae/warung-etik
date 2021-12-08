@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.http import response
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes
 from admin_warung.models import Barang
@@ -27,15 +28,19 @@ def create_item_keranjang(request):
     print(request.POST['jumlah_item'])
     item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, barang__id = id_barang, transaksi=None)
     if not item_keranjang.exists() :
-        new_item_keranjang = ItemKeranjang(
-            pelanggan = User.objects.get(username=username),
-            barang = Barang.objects.get(id=id_barang),
-            jumlah_item = jumlah_item
-            )
-        new_item_keranjang.save()
+        if (validate_availability(id_barang)):
+            new_item_keranjang = ItemKeranjang(
+                pelanggan = User.objects.get(username=username),
+                barang = Barang.objects.get(id=id_barang),
+                jumlah_item = jumlah_item
+                )
+            new_item_keranjang.save()
+            messages.success(request, "Barang berhasil ditambahkan dalam keranjang!")
+        else:
+            messages.error(request, "Stok barang tidak tersedia :(")
     else:
-        print("udah ada dude")
-    return Response(request.data)
+        messages.error(request, "Barang sudah ada dikeranjang")
+    return redirect(f"/barang/detail/{id_barang}/")
     
 @api_view(['POST'])
 def plus1_amount_item_keranjang(request):
@@ -94,7 +99,13 @@ def get_total_price(request,username):
         })
 
 
-
+def validate_availability(id):
+    available = False
+    barang = Barang.objects.get(id=id)
+    if(barang.stok>0):
+        available = True
+    return available
+    
 
 
 

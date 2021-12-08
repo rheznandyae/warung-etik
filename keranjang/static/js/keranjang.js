@@ -2,8 +2,6 @@ const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const keranjangList = document.querySelector(".list-keranjang")
 const container = document.querySelector(".container-lg")
 const username = JSON.parse(document.getElementById('username').textContent)
-console.log(username)
-console.log(csrftoken)
 
 async function update_total_harga(){
     await fetch(`/keranjang/api/gettotalprice/${username}`,{
