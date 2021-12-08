@@ -1,7 +1,7 @@
 var roomName = JSON.parse(document.getElementById('room_name').textContent)
 var username = JSON.parse(document.getElementById('username').textContent)
 
-var wsStart = (location.protocol == 'https') ? 'wss://' : 'ws://'
+var wsStart = (location.protocol == 'https:') ? 'wss://' : 'ws://'
 
 console.log(wsStart)
 console.log(location.protocol)
