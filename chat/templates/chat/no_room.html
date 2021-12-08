@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
+
+
+<title>Chat</title>
+{% endblock meta %}
+
+{% block content %}
+
+<br><br><br><br><br><br>
+<div class="text-center">
+    <h2 >Saat ini tidak ada ruangan chat yang terbuka</h2> <br><br>
+    <a href="{% url 'admin_warung:dashboard' %}" class="btn btn-outline-info">Kembali</a>
+</div>
+<br><br><br><br><br><br>
+
+{% endblock content %}
