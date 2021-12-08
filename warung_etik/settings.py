@@ -93,34 +93,16 @@ ASGI_APPLICATION = "warung_etik.asgi.application"
 
 # Channels for chat, TODO change param for deployment.
 
+
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', ('127.0.0.1', 6379) )],
         },
     },
 }
 
-if PRODUCTION:
-    CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [os.environ.get('REDIS_URL', '')]
-        },
-    },
-    }
-    
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': [os.environ.get('REDIS_URL', '')],
-        'OPTION': {
-            "CLIENT_CLASS": 'django_redis.client.DefaultClient',
-        },
-    },
-}
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
