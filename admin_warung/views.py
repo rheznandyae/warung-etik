@@ -1,18 +1,11 @@
-<<<<<<< HEAD
 from os import name
 from django.http import response, HttpResponseNotAllowed, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 
-from .models import Barang
-from .barang_form import BarangForm, ExcelUploadForm
-=======
-from django.http import response, HttpResponseNotAllowed
 from .models import *
-from admin_warung.models import Barang
-from .barang_form import BarangForm, ExcelUploadForm
-from django.shortcuts import redirect, render, get_object_or_404
->>>>>>> 5053ecd1431c1efc60edec2a8816e4c30467af27
+from .barang_form import ExcelUploadForm
+
 
 from openpyxl import load_workbook, Workbook
 from openpyxl.utils import get_column_letter
@@ -20,14 +13,11 @@ from openpyxl.utils.datetime import to_excel
 from openpyxl.writer.excel import save_virtual_workbook
 from openpyxl.styles import Border, Side, Alignment, PatternFill
 
-<<<<<<< HEAD
 import copy
 from datetime import datetime
-=======
 from transaksi.models import Transaksi
 from keranjang.models import ItemKeranjang
 
->>>>>>> 5053ecd1431c1efc60edec2a8816e4c30467af27
 
 def dashboard(request):
     barangs = Barang.objects.all()
@@ -129,19 +119,6 @@ def list_hapus_view(request):
     response['barangs'] = barangs
     return render(request, 'list_hapus.html', response)
 
-# def import_barang(request):
-#     if request.method == "GET":
-#         context = {
-#             "excel_upload_form": ExcelUploadForm(),
-#         }
-#         return render(request, 'dashboard.html',)
-
-#     if request.method == "POST":
-#         context = {"excel_upload_form": ExcelUploadForm()}
-#         return render(request, 'dashboard.html',)
-
-#     return HttpResponseNotAllowed(["GET", "POST"])
-
 
 def import_barang(request):
     form = ExcelUploadForm(request.POST, request.FILES)
@@ -183,7 +160,6 @@ def export_barang():
         ws.append(barang.get_all_value())
         
 
-<<<<<<< HEAD
     ### Styling ###
     
     # Column Size
@@ -235,7 +211,6 @@ def download(_):
 
 
     
-=======
     return HttpResponseNotAllowed(["GET", "POST"])
 
 
@@ -287,4 +262,3 @@ def set_barang_terjual(username, id):
         barang = item.barang
         barang.terjual = barang.terjual + item.jumlah_item
         barang.save()
->>>>>>> 5053ecd1431c1efc60edec2a8816e4c30467af27
