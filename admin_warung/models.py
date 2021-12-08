@@ -14,7 +14,10 @@ class Barang(models.Model):
         return "{}-{}".format(self.nama, self.id)
 
     def snippet(self):
-        return self.deskripsi[:150] + '...' if len(self.deskripsi) > 150 else self.deskripsi
+        if (self.deskripsi is None):
+            return ''
+        else:
+            return self.deskripsi[:150] + '...' if len(self.deskripsi) > 150 else self.deskripsi
     
     def get_all_value(self):
         return [field.value_from_object(self) for field in Barang._meta.fields]
