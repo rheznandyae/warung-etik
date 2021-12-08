@@ -20,6 +20,8 @@ def check(request):
             return render(request, 'chat/no_room.html')
         
         rn = r.name
+        return redirect('chat:room', room_name=rn)
+        
     else:
         try:
             r = Room.objects.get(user1=request.user) 
@@ -34,8 +36,9 @@ def check(request):
             new_room.save()
             r = Room.objects.get(user1=request.user)
             rn = r.name
+        return redirect('chat:room', room_name=rn)
     
-    return redirect('chat:room', room_name=rn)
+    
 
 @login_required
 def room(request, room_name):
