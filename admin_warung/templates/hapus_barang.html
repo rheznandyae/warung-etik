@@ -4,7 +4,7 @@
 {% block meta %}
 <title>Hapus Barang</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/css_admin.css' %}">
-
+{% load humanize %}
 {% endblock meta %}
 
 {% block content %}
@@ -16,32 +16,42 @@
         </div>
         <div class="container-lg d-flex align-items-center flex-column min-vh-100">
             <div class="d-flex justify-content-center row mx-1 mx-md-0">
-                <div class="card shadow col-12 col-md-8 mt-2">
+                <div class="card shadow col-12 col-md-10 mt-2">
                     <div class="m-2 p-2">
                         <div class="row justify-content-center w-auto">
 
                             <table>
                                 <tr>
-                                    <td style="width: 170px;"><b>Nama</b></td>
-                                    <td>: Indomie</td>
+                                    <td style="vertical-align: top; width: 170px;"><b>Nama</b></td>
+                                    <td style="vertical-align: top; width:1%">:</td>
+                                    <td>{{ barang.nama }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 170px;"><b>Harga</b></td>
+                                    <td style="width:1%">:</td>
+                                    <td>Rp{{ barang.harga|intcomma }}</td>
                                 </tr>
                                 <tr>
                                     <td style="width: 170px;"><b>Stok</b></td>
-                                    <td>: 10</td>
+                                    <td style="width:1%">:</td>
+                                    <td>{{ barang.stok }}</td>
                                 </tr>
                                 <tr>
                                     <td style="width: 170px;"><b>Jumlah Terjual</b></td>
-                                    <td>: 9</td>
+                                    <td style="width:1%">:</td>
+                                    <td>{{ barang.terjual }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 170px;"><b>Deskripsi</b></td>
-                                    <td>: Indomie Goreng</td>
+                                    <td style="vertical-align: top; width: 170px;"><b>Deskripsi</b></td>
+                                    <td style="vertical-align: top; width:1%">:</td>
+                                    <td>{{ barang.deskripsi }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 170px;"><b>Gambar</b></td>
-                                    <td>: <img class="rounded-3 img-fluid col-8 col-lg-8"
-                                            src="https://images.unsplash.com/photo-1611312752514-9439fdba223d" alt="">
-                                    </td>
+                                    <td style="vertical-align: top; width: 170px;"><b>Gambar</b></td>
+                                    <td style="vertical-align: top; width:1%">:</td>
+                                    <td><img class="rounded-3 img-fluid col-8 col-lg-8"
+                                         style="max-height:600px;" src="{{ barang.image_url }}" alt=""></td>
                                 </tr>
                             </table>
                         </div>
@@ -50,8 +60,11 @@
             </div>
 
             <div class="text-center" style="padding-top: 25px;">
-                <button type="submit" class="btn btn-primary">Hapus</button>
-                <a class="btn btn-secondary" href="{% url 'admin_warung:list-hapus' %}" role="button">Kembali</a>
+                <form action='' method='POST'>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Hapus</button>
+                    <a class="btn btn-secondary" href="{% url 'admin_warung:list-hapus' %}" role="button">Kembali</a>
+                </form>
             </div>
         </div>
     </div>

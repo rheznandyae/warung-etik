@@ -1,11 +1,10 @@
 from django import forms
+from .models import Barang
 
 class BarangForm(forms.Form):
-    nama = forms.CharField(label='Nama Barang', max_length=100)
-    stok = forms.IntegerField(label='Jumlah Stok')
-    terjual = forms.IntegerField(label='Terjual')
-    deskripsi = forms.CharField(label='Deskripsi Barang', max_length=300)
-    gambar = forms.ImageField(label='Gambar')
+    class Meta:
+        model = Barang
+        fields = "__all__"
 
 class ExcelUploadForm(forms.Form):
     excel_file = forms.FileField()
