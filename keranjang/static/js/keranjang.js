@@ -32,19 +32,30 @@ async function getListItemKeranjang(){
             
             data.forEach((item) => {
                 keranjangList.innerHTML += `
-                <div class="card item-${item.id} shadow col-12 col-md-8 mt-2">
+                <div class="card item-${item.id} shadow col-12 col-sm-10 mt-2" style="max-width: 60rem;">
                     <div class="m-2 p-2">
                         <div class="row justify-content-center w-auto">
-                            <img class="rounded-3 img-fluid col-12 col-lg-4" src="${item.barang.image_url}" alt="">
-                            <div class="ms-2 card-body d-flex flex-column justify-content-between col-12 col-lg-5 ">
+                            <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
+                                <img class="rounded-3 img-fluid" src="${item.barang.image_url}" alt="">
+                            </div> 
+                            <div class="ms-2 card-body d-flex flex-column justify-content-between col-12 col-md-5 ">
                                 <div>
                                     <h3><b>${item.barang.nama}</b></h3>
-                                    <p>
-                                        ${item.barang.deskripsi}
-                                    </p>
+                                    <div style="
+                                        position: relative;
+                                        max-height:150px;
+                                        overflow: auto;
+                                        display: block;"
+                                        class="mb-1 mb-md-3"
+                                    >
+                                        <p>
+                                            ${item.barang.deskripsi}
+                                        </p>
+                                    </div>
+                                    
                                 </div>
                                 <div>
-                                    <h4 class="mb-3"><b>Rp${item.barang.harga}</b></h4>
+                                    <h4 class="mb-3 "><b>Rp${item.barang.harga}</b></h4>
                                     <div>
                                         <div class="btn-group btn-quantity" role="group" aria-label="Basic mixed styles example">
                                             <button id="minus1-${item.id}" onClick="minus1_item_keranjang(${item.id})"  type="button" class="btn btn-danger"><b>-</b></button>
