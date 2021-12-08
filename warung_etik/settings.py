@@ -25,6 +25,7 @@ PRODUCTION = os.getenv('DATABASE_URL') is not None
 # If you want to enable debugging on Heroku for learning purposes,
 # set this to True.
 DEBUG = not PRODUCTION
+DEBUG = True
 
 HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME', '')
 
