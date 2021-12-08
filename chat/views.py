@@ -27,7 +27,7 @@ def check(request):
             r = Room.objects.get(user1=request.user) 
         except Room.DoesNotExist:
             r = None
-        rn = r.name
+            
         if (r is None):
             new_room = Room(
                 user1=request.user,
