@@ -2,16 +2,28 @@ from django.http import response, HttpResponseNotAllowed
 from .models import *
 from admin_warung.models import Barang
 from .barang_form import BarangForm, ExcelUploadForm
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 
+from transaksi.models import Transaksi
 
 def dashboard(request):
     barangs = Barang.objects.all()
+
+    if request.method == 'POST':
+        idTransaksi = request.POST.get('transaksi')
+        update_transaksi(idTransaksi)
+
+        redirect('admin_warung:dashboard')
+
     context = {
         "excel_upload_form": ExcelUploadForm(),
         "barangs": barangs,
     }
+
+    context['transaksi'] = get_all_transaksi()
+
+    # print(context)
     return render(request, 'dashboard.html', context=context)
 
 def detail_barang_admin_view(request, id):
@@ -96,3 +108,32 @@ def import_barang(request):
         return render(request, 'dashboard.html',)
 
     return HttpResponseNotAllowed(["GET", "POST"])
+
+
+
+def get_all_transaksi():
+    context = []
+
+    transaksi = Transaksi.objects.all()
+
+    for tr in transaksi:
+        id = tr.idTransaksi
+        date = tr.timeStamp
+        pembeli = tr.usernamePembeli
+        total = tr.totalPesanan
+        cara = tr.caraPembayaran
+        status = tr.statusTransaksi
+        context.append([id, date, pembeli, total, cara, status])
+
+    return context
+
+def update_transaksi(id):
+    context = []
+
+    transaksi = Transaksi.objects.get(idTransaksi = id)
+
+    transaksi.statusTransaksi = 'transaksi berhasil'
+
+    transaksi.save()
+
+    return context

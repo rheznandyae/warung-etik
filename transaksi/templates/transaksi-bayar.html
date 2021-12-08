@@ -29,48 +29,54 @@
                                     <h4 class="card-title">WarungEtik</h4>
                                     
                                     <h5 class="card-text mt-3">no. rekening : 12345xxxx</h5>
-                                    <h5 class="card-text mt-2 mb-2">nominal transfer : Rp. 27.000</h5>
+                                    <h5 class="card-text mt-2 mb-2">nominal transfer : rp. {{ transaksi.totalPesanan }}</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <h4 class="mt-4">status pemesanan : menunggu konfirmasi transfer</h4>
+                    <h4 class="mt-4">status pemesanan : {{ transaksi.statusTransaksi }}</h4>
+                    <h4 class="mt-4">ID transaksi : {{ transaksi.idTransaksi }}</h4>
 
-                    <a href="{% url 'transaksi:transaksiKonfirm' %}"><button class="btn btn-lg btn-success mt-4 mb-3 me-4">SAYA SUDAH TRANSFER</button></a> 
-                    <a href="{% url 'transaksi:transaksiFailTemp' %}"><button class="btn btn-lg btn-danger mt-4 mb-3">BATALKAN PESANAN</button></a> 
+                    <!-- <a href="{% url 'transaksi:transaksiKonfirm' %}"><button class="btn btn-lg btn-success mt-4 mb-3 me-4">SAYA SUDAH TRANSFER</button></a> 
+                    <a href="{% url 'transaksi:transaksiFailTemp' %}"><button class="btn btn-lg btn-danger mt-4 mb-3">BATALKAN PESANAN</button></a> -->
+                    
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="konfirmasi" id="">
+                        <input class="btn btn-lg btn-success mt-4 me-4" type="submit" value="SAYA SUDAH TRANSFER" style="color: white;">
+                    </form>
+
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="batal" id="">
+                        <input class="btn btn-lg btn-danger mt-4 mb-3" type="submit" value="BATALKAN PESANAN" style="color: white;">
+                    </form>
                 </section>
                 
                 <section class="content-main">
                     <h3>detil pesanan</h3>
 
-                    <div class="row mt-2">
+                {% for n in items %}
+
+                {% if n.0 != 'totalPesanan' %}
+                    <div class="row mt-3 mb-1">
 
                         <div class="col-md-4">
-                            <img class="img-barang" src="https://cf.shopee.co.id/file/64a464eea863fd5c110dc035c43c946b" alt="indomie">
+                            <img class="img-barang" src="{{ n.3 }}" alt="{{ n.0 }}">
                         </div>
 
                         <div class="col-md-8">
-                            <h4 class="top-align">indomie goreng</h4>
-                            <h5 class="mid-align">rp. 2.500</h5>
-                            <h5 class="bottom-align">jumlah barang : 5</h5>
+                            <h4 class="mt-1">{{ n.0 }}</h4>
+                            <h5 class="mid-align">rp. {{ n.1 }}</h5>
+                            <h5 class="bottom-align">jumlah barang : {{ n.2 }}</h5>
                         </div>
                         
                     </div>
+                {% endif %}
 
-                    <div class="row mt-2">
-
-                        <div class="col-md-4">
-                            <img class="img-barang" src="https://cf.shopee.co.id/file/64a464eea863fd5c110dc035c43c946b" alt="indomie">
-                        </div>
-
-                        <div class="col-md-8">
-                            <h4 class="top-align">indomie goreng</h4>
-                            <h5 class="mid-align">rp. 2.500</h5>
-                            <h5 class="bottom-align">jumlah barang : 5</h5>
-                        </div>
-                        
-                    </div>
+                {% endfor %}
+                
                 </section>
                 
             </div>

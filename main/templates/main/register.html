@@ -14,34 +14,51 @@
     <div class="col-6 d-flex justify-content-center row mx-1 mx-md-0">
 
         
-        <form class="">
+        <form class="" method="POST">
+            {% csrf_token %}
             <div class="mb-3">
-                <label for="nama-depan" class="form-label">Nama Depan</label>
-                <input type="text" class="form-control" id="nama-depan" aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-                <label for="nama-belakang" class="form-label">Nama Belakang</label>
-                <input type="text" class="form-control" id="nama-belakang">
+                <label for="nama-depan" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" maxlength="10">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password">
+                <label for="password1" class="form-label">Password</label>
+                {{form.password1}}
             </div>
             <div class="mb-3">
-                <label for="password-confirm" class="form-label">Password Confirm</label>
-                <input type="password" class="form-control" id="password-confirm">
+                <label for="password2" class="form-label">Password Confirm</label>
+                {{form.password2}}
             </div>
-            <button type="button" style="background-color: #04D4F0; color: #FFFFFF;" class="btn fw-bold">Register</button>
+            {% if errors %}
+					<div id="errorlist">
+					{% for errorMessage in errors %}
+							{{ errorMessage }}
+					{% endfor %}
+					</div>
+				{% endif %}
+
+            <input type="submit" style="background-color: #04D4F0; color: #FFFFFF;" value="Register" class="btn fw-bold">
         </form>
 
 
 
 
     </div>
+    <script>
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Username';
+		form_fields[2].placeholder='user@email.com';
+		form_fields[3].placeholder='password';
+		form_fields[4].placeholder='re-enter password';
+
+
+		for (var field in form_fields){	
+			form_fields[field].className += ' form-control'
+		}
+	</script>
 
 </div>
 
