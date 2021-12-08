@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Barang',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('nama', models.CharField(max_length=100)),
                 ('harga', models.PositiveIntegerField(blank=True, null=True)),
                 ('stok', models.PositiveIntegerField(blank=True, null=True)),

@@ -4,7 +4,7 @@
 {% block meta %}
 <title>Ubah Barang</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/css_admin.css' %}">
-
+{% load humanize %}
 {% endblock meta %}
 
 {% block content %}
@@ -12,32 +12,40 @@
 <body>
     <div class="dashboard container min-vh-100">
         <h2><b>Ubah Barang</b></h2>
-        <form method="POST">
+        <form method="POST" action="">
             {% csrf_token %}
             <table class="w-100">
                 <tr>
-                    <td style="width: 222px;"><b>Nama</b></td>
-                    <td><input type="text" class="form-control" id="nama" value="Indomie"></td>
+                    <td style="vertical-align: top; width: 170px;"><b><label class="form-label">ID</label></b></td>
+                    <td><input type="text" class="form-control" placeholder={{barang.id}} readonly></td>
                 </tr>
                 <tr>
-                    <td style="width: 222px;"><b>Stok</b></td>
-                    <td><input type="text" class="form-control" id="stok" value=3></td>
+                    <td style="vertical-align: top; width: 170px;"><b><label for="nama" class="form-label">Nama</label></b></td>
+                    <td><input type="text" class="form-control" id="nama" name="nama" value={{barang.nama}} required></td>
                 </tr>
                 <tr>
-                    <td style="width: 222px;"><b>Jumlah Terjual</b></td>
-                    <td><input type="text" class="form-control" id="terjual" value=9></td>
+                    <td><b><label for="harga" class="form-label">Harga</label></b></td>
+                    <td><input type="text" class="form-control" id="harga" name="harga" value={{barang.harga}} required></td>
                 </tr>
                 <tr>
-                    <td style="vertical-align: top; width: 222px;"><b>Deskripsi</b></td>
-                    <td><textarea name="deskripsi" cols="40" rows="5" id="deskripsi">Indomie seleraku</textarea></td>
+                    <td><b><label for="stok" class="form-label">Stok</label></b></td>
+                    <td><input type="text" class="form-control" id="stok" name="stok" value={{barang.stok}} required></td>
                 </tr>
                 <tr>
-                    <td style="vertical-align: top; width: 222px;"><b>Gambar</b></td>
-                    <td><img class="rounded-3 img-fluid col-8 col-lg-3" src="https://images.unsplash.com/photo-1611312752514-9439fdba223d" alt=""></td>
+                    <td><b><label for="terjual" class="form-label">Jumlah Terjual</label></b></td>
+                    <td><input type="text" class="form-control" id="terjual" name="terjual" value={{barang.terjual}}></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 170px;"><b><label for="deskripsi" class="form-label">Deskripsi</label></b></td>
+                    <td><textarea class="form-control" name="deskripsi" cols="40" rows="5" id="deskripsi">{{barang.deskripsi}}</textarea></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; width: 170px;"><b>Gambar</b></td>
+                    <td><img class="rounded-3 img-fluid col-8 col-lg-8 w-auto" style="max-height: 400px;" src="{{ barang.image_url }}" alt=""></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td>{{form.gambar}}</td>
+                    <td><textarea class="form-control" name="image_url" cols="100" rows="2" id="image_url">{{barang.image_url}}</textarea></td>
                 </tr>
             </table>
             <div class="text-center" style="padding-top: 25px;">

@@ -108,7 +108,8 @@
                         <form action="" method="POST">
                           {% csrf_token %}
                           <input type="hidden" name="transaksi" value="{{ tr.0 }}" id="">
-                          <input class="btn btn-outline-success" type="submit" value="Konfirmasi">
+                          <input type="hidden" name="action" value="konfirmasi" id="">
+                          <input class="btn btn-outline-success" type="submit" value="Ya">
 
                           <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
                             Batal
@@ -119,7 +120,33 @@
                     </div>
                   </div>
 
-                  <a href="" class="btn btn-outline-danger">Gagal</a>
+                  <button type="button" class="btn btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalTransaksiGagal">
+                    Gagal
+                  </button>
+
+                  <div class="modal fade" id="modalTransaksiGagal" tabindex="-1" aria-labelledby="modalTransaksiGagal" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" id="modalTransaksiGagal">Transaksi {{ tr.0 }} Gagal?</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+              
+                      <div class="modal-body">
+                        <form action="" method="POST">
+                          {% csrf_token %}
+                          <input type="hidden" name="transaksi" value="{{ tr.0 }}" id="">
+                          <input type="hidden" name="action" value="gagal" id="">
+                          <input class="btn btn-outline-success" type="submit" value="Ya">
+
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Batal
+                          </button>
+                        </form>
+                      </div>
+                    </div> 
+                    </div>
+                  </div>
                   {% else %}
                   -
                   {% endif %}
@@ -135,26 +162,19 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Nama Barang</th>
                 <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
+              {% for barang in barangs %}
               <tr>
-                <th scope="row">1</th>
-                <td>Indomie Goreng</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
+                <th scope="row">{{barang.id}}</th>
+                <td>{{barang.nama}}</td>
+                <td><a href="{% url 'admin_warung:detail-barang-admin' barang.id %}" class="btn btn-outline-info">Detail</a></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Indomie Kuah</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
-              </tr>              <tr>
-                <th scope="row">3</th>
-                <td>Indomie Aceh</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
-              </tr>
+              {% endfor %}
 
             </tbody>
           </table>

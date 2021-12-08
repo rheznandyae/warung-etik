@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.loginUser, name='login'),
     path('register/', views.register, name='register'),
-    path('search/', views.search, name='search'),
+    path('?search=<str:search>/', views.search, name='search'),
     path('logout/', views.logoutUser, name="logout")
 ]
 
