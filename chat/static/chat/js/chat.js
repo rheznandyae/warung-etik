@@ -3,11 +3,6 @@ var username = JSON.parse(document.getElementById('username').textContent)
 
 var wsStart = (location.protocol == 'https:') ? 'wss://' : 'ws://'
 
-console.log(wsStart)
-console.log(location.protocol)
-console.log(location.protocol == 'https')
-
-
 var chatSocket = new ReconnectingWebSocket(
     wsStart
     + window.location.host
