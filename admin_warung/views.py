@@ -7,10 +7,18 @@ from transaksi.models import Transaksi
 def dashboard(request):
 
     if request.method == 'POST':
-        idTransaksi = request.POST.get('transaksi')
-        update_transaksi(idTransaksi)
+        action = request.POST.get('action')
 
-        redirect('admin_warung:dashboard')
+        if action == 'konfirmasi':
+            idTransaksi = request.POST.get('transaksi')
+            update_transaksi(idTransaksi)
+
+            redirect('admin_warung:dashboard')
+        else:
+            idTransaksi = request.POST.get('transaksi')
+            update_status(idTransaksi)
+
+            redirect('admin_warung:dashboard')
 
     context = {
         "excel_upload_form": ExcelUploadForm(),
@@ -106,6 +114,17 @@ def update_transaksi(id):
     transaksi = Transaksi.objects.get(idTransaksi = id)
 
     transaksi.statusTransaksi = 'transaksi berhasil'
+
+    transaksi.save()
+
+    return context
+
+def update_status(id):
+    context = []
+
+    transaksi = Transaksi.objects.get(idTransaksi = id)
+
+    transaksi.statusTransaksi = 'menunggu konfirmasi pembayaran'
 
     transaksi.save()
 
