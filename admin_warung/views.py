@@ -6,6 +6,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 
 from transaksi.models import Transaksi
+from keranjang.models import ItemKeranjang
+
 
 def dashboard(request):
     barangs = Barang.objects.all()
@@ -16,6 +18,9 @@ def dashboard(request):
         if action == 'konfirmasi':
             idTransaksi = request.POST.get('transaksi')
             update_transaksi(idTransaksi)
+
+            username = request.user.username
+            set_barang_terjual(username, idTransaksi)
 
             redirect('admin_warung:dashboard')
         else:
@@ -156,3 +161,13 @@ def update_status(id):
     transaksi.save()
 
     return context
+
+def set_barang_terjual(username, id):
+    tr = Transaksi.objects.get(idTransaksi = id)
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi = tr)
+
+    for item in item_keranjang:
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = tr)
+        barang = item.barang
+        barang.terjual = barang.terjual + item.jumlah_item
+        barang.save()

@@ -30,6 +30,9 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% if list_barang.0 == None %}
+        <h5 class="mt-5">Maaf barang tidak ditemukan</h5>
+      {% endif %}
       {% for barang in list_barang %}
         <div class="col">
           <div class="card h-100">
@@ -41,7 +44,7 @@
             </div>
           </div>
         </div>
-        {% endfor %}
+      {% endfor %}
       </div>
   </div>
 </div>
