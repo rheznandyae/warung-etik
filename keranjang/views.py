@@ -28,7 +28,7 @@ def create_item_keranjang(request):
     print(request.POST['jumlah_item'])
     item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, barang__id = id_barang, transaksi=None)
     if not item_keranjang.exists() :
-        if (validate_availability(id_barang)):
+        if (validate_availability(id_barang, jumlah_item)):
             new_item_keranjang = ItemKeranjang(
                 pelanggan = User.objects.get(username=username),
                 barang = Barang.objects.get(id=id_barang),
@@ -99,10 +99,10 @@ def get_total_price(request,username):
         })
 
 
-def validate_availability(id):
+def validate_availability(id, jumlah_item):
     available = False
     barang = Barang.objects.get(id=id)
-    if(barang.stok>0):
+    if(barang.stok >= int(jumlah_item)):
         available = True
     return available
     
