@@ -1,14 +1,24 @@
 from django.http import response
 from django.shortcuts import redirect, render
+from django.template.response import ContentNotRenderedError
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import Transaksi
+
+from keranjang.models import ItemKeranjang
 
 # Create your views here.
 
 
 def pembayaran(request):
-
+    username = request.user.username
+    item_not_available = validate_is_barang_available(username)
+    if item_not_available:
+        messages.error(request, "{} not available".format(", ".join(item_not_available)))
+        return redirect('/keranjang/') 
+    
     if request.method == 'POST':
 
         metode = request.POST.get('metode')
@@ -38,19 +48,25 @@ def pembayaran(request):
         newTR = Transaksi(
             idTransaksi = newID,
             statusTransaksi = 'menunggu konfirmasi pembayaran',
-            usernamePembeli = 'tes',
+            usernamePembeli = username,
             caraPembayaran = metode,
-            timeStamp = timezone.now()
+            timeStamp = timezone.now(),
+            totalPesanan = get_total_pesanan(username)
         )
 
         newTR.save()
 
-        # print(newID)
+        set_item_keranjang_tr(username, newTR)
+        set_jumlah_barang_minus(username, newTR)
     
         return redirect('transaksi:transaksiChecker', id = newID)
-        # return redirect('/transaksi/temp/?id=' + newID + '/')
-    
+
     context = {}
+
+    context['items'] = get_items(username)
+
+    # print(context)
+
     return render(request, 'pembayaran.html', context)
 
 
@@ -59,6 +75,12 @@ def transaksiChecker(request, id):
     TR = Transaksi.objects.get(idTransaksi = id)
 
     context = {'transaksi':TR}
+
+    username = request.user.username
+
+    context['items'] = get_items_by_tr(username, TR)
+
+    # print(context)
 
     if request.method == 'POST':
         
@@ -69,16 +91,18 @@ def transaksiChecker(request, id):
 
             TR.save()
 
-            print('tested tit')
+            # print('tested tit')
 
             return render(request, 'transaksi-konfirm.html', context)
 
         elif action == 'batal':
+            set_jumlah_barang_plus(username, TR)
+
             TR.statusTransaksi = 'transaksi dibatalkan'
 
             TR.save()
 
-            print('tested tot')
+            # print('tested tot')
 
             return render(request, 'transaksi-done.html', context)
 
@@ -93,10 +117,100 @@ def transaksiChecker(request, id):
             return render(request, 'transaksi-konfirm.html', context)
 
         else:
+            print(context)
             return render(request, 'transaksi-done.html', context)
 
+def validate_is_barang_available(username):
+    item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi=None)
+    item_not_available = []
+    for item in item_keranjangs:
+        jumlah_stok = item.barang.stok
+        jumlah_permintaan = item.jumlah_item
+        if jumlah_stok < jumlah_permintaan:
+            item_not_available.append(item.barang.nama)
 
+    return item_not_available
 
+def get_items(username):
+    context = []
+
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=None)
+
+    total_price = 0
+    n = 0
+    for item in item_keranjang:
+        nama = item.barang.nama
+        image_url = item.barang.image_url
+        harga = item.barang.harga
+        jumlah = item.jumlah_item
+        total_price += jumlah * harga
+        context.append([nama, harga, jumlah, image_url])
+        n+=1
+
+    context.append(['totalPesanan', total_price])
+
+    # print(context)
+
+    return context
+
+def get_items_by_tr(username, tr):
+    context = []
+
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=tr)
+
+    total_price = 0
+    n = 0
+    for item in item_keranjang:
+        nama = item.barang.nama
+        image_url = item.barang.image_url
+        harga = item.barang.harga
+        jumlah = item.jumlah_item
+        total_price += jumlah * harga
+        context.append([nama, harga, jumlah, image_url])
+        n+=1
+
+    context.append(['totalPesanan', total_price])
+
+    print(context)
+
+    return context
+
+def get_total_pesanan(username):
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi=None)
+
+    total_price = 0
+    for item in item_keranjang:
+        harga = item.barang.harga
+        jumlah = item.jumlah_item
+        total_price += jumlah * harga
+
+    return total_price
+
+def set_item_keranjang_tr(username, tr):
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi = None)
+
+    for item in item_keranjang:
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = None)
+        item.transaksi = tr
+        item.save()
+
+def set_jumlah_barang_minus(username, tr):
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi = tr)
+
+    for item in item_keranjang:
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = tr)
+        barang = item.barang
+        barang.stok = barang.stok - item.jumlah_item
+        barang.save()
+
+def set_jumlah_barang_plus(username, tr):
+    item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi = tr)
+
+    for item in item_keranjang:
+        item = ItemKeranjang.objects.get(pelanggan = item.pelanggan, barang = item.barang, transaksi = tr)
+        barang = item.barang
+        barang.stok = barang.stok + item.jumlah_item
+        barang.save()
 
 
 

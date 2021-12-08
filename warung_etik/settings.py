@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'transaksi',
     'admin_warung',
     'review',
-    'visualisasi_data'
+    'visualisasi_data',
 ]
 
 MIDDLEWARE = [

@@ -70,31 +70,89 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
                 <th scope="col">No. Transaksi</th>
-                <th scope="col">Jlh. Pembayaran</th>
-                <th scope="col">Deskripsi</th>
+                <th scope="col">Time Stamp</th>
+                <th scope="col">Pembeli</th>
+                <th scope="col">Total Pesanan</th>
+                <th scope="col">Cara Pembayaran</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
+              {% for tr in transaksi %}
               <tr>
-                <th scope="row">1</th>
-                <td>TRX0138</td>
-                <td>Rp. 150,000</td>
-                <td>-</td>
+                <td scope="row"><b>{{ tr.0 }}</b></td>
+                <td>{{ tr.1 }}</td>
+                <td>{{ tr.2 }}</td>
+                <td>{{ tr.3 }}</td>
+                <td>{{ tr.4 }}</td>
+                <td>{{ tr.5 }}</td>
+                <td>
+                  {% if tr.5 == 'menunggu konfirmasi admin' %}
+                  
+                  <button type="button" class="btn btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalTransaksi">
+                    Konfirm
+                  </button>
+              
+                  <!-- Modal -->
+                  <div class="modal fade" id="modalTransaksi" tabindex="-1" aria-labelledby="modalTransaksi" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" id="modalTransaksi">Konfirmasi Transaksi {{ tr.0 }}?</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+              
+                      <div class="modal-body">
+                        <form action="" method="POST">
+                          {% csrf_token %}
+                          <input type="hidden" name="transaksi" value="{{ tr.0 }}" id="">
+                          <input type="hidden" name="action" value="konfirmasi" id="">
+                          <input class="btn btn-outline-success" type="submit" value="Ya">
+
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Batal
+                          </button>
+                        </form>
+                      </div>
+                    </div> 
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalTransaksiGagal">
+                    Gagal
+                  </button>
+
+                  <div class="modal fade" id="modalTransaksiGagal" tabindex="-1" aria-labelledby="modalTransaksiGagal" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" id="modalTransaksiGagal">Transaksi {{ tr.0 }} Gagal?</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+              
+                      <div class="modal-body">
+                        <form action="" method="POST">
+                          {% csrf_token %}
+                          <input type="hidden" name="transaksi" value="{{ tr.0 }}" id="">
+                          <input type="hidden" name="action" value="gagal" id="">
+                          <input class="btn btn-outline-success" type="submit" value="Ya">
+
+                          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Batal
+                          </button>
+                        </form>
+                      </div>
+                    </div> 
+                    </div>
+                  </div>
+                  {% else %}
+                  -
+                  {% endif %}
+                </td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>TRX0123</td>
-                <td>Rp. 30,000</td>
-                <td>bayar di tempat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>TRX0131</td>
-                <td>Rp. 1,000,000</td>
-                <td>transfer bank</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
     </div>
@@ -104,26 +162,19 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Nama Barang</th>
                 <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
+              {% for barang in barangs %}
               <tr>
-                <th scope="row">1</th>
-                <td>Indomie Goreng</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
+                <th scope="row">{{barang.id}}</th>
+                <td>{{barang.nama}}</td>
+                <td><a href="{% url 'admin_warung:detail-barang-admin' barang.id %}" class="btn btn-outline-info">Detail</a></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Indomie Kuah</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
-              </tr>              <tr>
-                <th scope="row">3</th>
-                <td>Indomie Aceh</td>
-                <td><a href="{% url 'admin_warung:detail-barang-admin' %}" class="btn btn-outline-info">Detail</a></td>
-              </tr>
+              {% endfor %}
 
             </tbody>
           </table>

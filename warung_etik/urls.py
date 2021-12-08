@@ -11,4 +11,5 @@ urlpatterns = [
     path('barang/', include('barang.urls', namespace='barang')),
     path('review/', include('review.urls', namespace='review')),
     path('visualisasi/', include('visualisasi_data.urls', namespace='visualisasi_data')),
+  
 ]

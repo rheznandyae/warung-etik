@@ -9,22 +9,7 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 
 def keranjang_view(request):
-    context={
-        'list_barang':[
-            {
-                'nama': 'Mie Goreng',
-                'keterangan': 'Mie instant enak',
-                'jumlah_item': '20',
-                'image':'https://images.unsplash.com/photo-1638518945531-ff6290869fb2'
-            },
-            {
-                'nama': 'Mie Goreng',
-                'keterangan': 'Mie instant enak',
-                'jumlah_item': '20',
-                'image':'https://images.unsplash.com/photo-1638518945531-ff6290869fb2'
-            }
-        ]
-    }
+    context={}
 
     return render(request, 'keranjang.html', context=context)
 
