@@ -11,16 +11,6 @@ var chatSocket = new ReconnectingWebSocket(
     + '/'
 );
 
-if (location.protocol === 'https') {
-    chatSocket = new ReconnectingWebSocket(
-        'ws://'
-        + window.location.host
-        + '/ws/chat/room/'
-        + roomName
-        + '/'
-    );
-}
-
 chatSocket.onopen = function(e) {
     fetchMessages();
 }
