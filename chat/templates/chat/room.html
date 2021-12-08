@@ -1,54 +1,87 @@
-<!-- chat/templates/chat/room.html -->
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
 
-    <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+{% block meta %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
 
-        const chatSocket = new ReconnectingWebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-        };
+<title>Chat Admin</title>
+{% endblock meta %}
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+{% block content %}
+{{ username|json_script:"username" }}
+{{ room_name|json_script:"room_name" }}
+<div class="container app">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                {% if is_super_user %}
+                    <div id="plist" class="people-list">
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+                        <div class="plist-header clearfix bg-custom-2 p-3">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h6 class="m-0 text-center">Daftar Pelanggan</h6>
+                                </div>
+                            </div>
+                        </div>
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'command': 'fetch_messages'
-            }));
-            messageInputDom.value = '';
-        };
-    </script>
-</body>
-</html>
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            {% for room in rooms %}
+                                {% if room.name == current_room.name %}
+                                    <li class="clearfix active">
+                                {% else %}
+                                    <li class="clearfix">
+                                {% endif %}
+                                        <div class="about">
+                                            <a href="{% url 'chat:room' room_name=room.name %}"class="name">{{ room.user1.username }}</a>
+                                        </div>
+                                    </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% if is_super_user %}
+                    <div class="chat">
+                {% else %}
+                    <div class="chat" id="chat-2">
+                {% endif %}
+                    <div class="chat-header clearfix bg-custom-1 p-3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="chat-about">
+                                    {% if is_super_user %}
+                                    <h6 class="m-0"> {{ current_room.user1 }} </h6>
+                                    {% else %}
+                                    <h6 class="m-0"> Admin </h6>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-history bg-custom-3">
+                        <ul class="mb-0" id="chat-log">
+                        </ul>
+                    </div>
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control" id="chat-message-input" placeholder="Write your message here...">                                    
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-info" id="chat-message-submit">
+                                    <span class="material-icons" id="send-logo">send</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'chat/js/reconnecting-websocket.js' %}"></script>
+<script src="{% static 'chat/js/chat.js' %}"></script>
+
+{% endblock content %}
