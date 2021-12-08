@@ -6,10 +6,10 @@ $(document).ready(function(){
         var transaksi_piechart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: [{%for data in transaksi%}'{{data.caraPembayaran}}',{%endfor%}], //loop through queryset, 
+                labels: [{%for data in cara_pembayaran%}'{{data.caraPembayaran}}',{%endfor%}], //loop through queryset, 
                 datasets: [{
                     label: '# of users', 
-                    data: [{%for data in transaksi%}{{data.num_users}},{%endfor%}],
+                    data: [{%for data in cara_pembayaran%}{{data.count}},{%endfor%}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)', 
                         'rgba(54, 162, 235, 0.2)',

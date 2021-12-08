@@ -13,12 +13,18 @@ cryptography==35.0.0
 daphne==3.0.2
 dj-database-url==0.5.0
 Django==3.2.9
+djangorestframework==3.12.4
+et-xmlfile==1.1.0
 gunicorn==20.1.0
 hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0
 msgpack==1.0.3
+<<<<<<< HEAD
+=======
+openpyxl==3.0.9
+>>>>>>> 0d07b528e4737f0686495ba90caa0b3faa446390
 psycopg2-binary==2.9.2
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -36,6 +42,3 @@ typing_extensions==4.0.0
 urllib3==1.26.7
 whitenoise==5.3.0
 zope.interface==5.4.0
-djangorestframework
-django-cors-headers
-requests
