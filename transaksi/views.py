@@ -30,9 +30,7 @@ def pembayaran(request):
 
         else:
             lastID = int(lastTR.idTransaksi[2:])
-            # print(lastID)
             newID = lastID + 1
-            # print(newID)
 
             if newID < 10:
                 newID = 'TR0000' + str(newID)
@@ -65,7 +63,6 @@ def pembayaran(request):
 
     context['items'] = get_items(username)
 
-    # print(context)
 
     return render(request, 'pembayaran.html', context)
 
@@ -80,7 +77,6 @@ def transaksiChecker(request, id):
 
     context['items'] = get_items_by_tr(username, TR)
 
-    # print(context)
 
     if request.method == 'POST':
         
@@ -91,7 +87,6 @@ def transaksiChecker(request, id):
 
             TR.save()
 
-            # print('tested tit')
 
             return render(request, 'transaksi-konfirm.html', context)
 
@@ -102,7 +97,6 @@ def transaksiChecker(request, id):
 
             TR.save()
 
-            # print('tested tot')
 
             return render(request, 'transaksi-done.html', context)
 
@@ -117,7 +111,6 @@ def transaksiChecker(request, id):
             return render(request, 'transaksi-konfirm.html', context)
 
         else:
-            print(context)
             return render(request, 'transaksi-done.html', context)
 
 def validate_is_barang_available(username):
@@ -149,7 +142,6 @@ def get_items(username):
 
     context.append(['totalPesanan', total_price])
 
-    # print(context)
 
     return context
 
@@ -170,8 +162,6 @@ def get_items_by_tr(username, tr):
         n+=1
 
     context.append(['totalPesanan', total_price])
-
-    print(context)
 
     return context
 
