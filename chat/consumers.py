@@ -4,30 +4,42 @@ import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from django.contrib.auth import get_user_model
-from django.core.checks import messages
 
-from .models import Message
+from .models import Message,Room
 
 User = get_user_model()
 
 class ChatConsumer(WebsocketConsumer):
     
     def fetch_messages(self, data):
-        messages = Message.last_25_messages()
-        content = {
-            'messages' : self.messages_to_json(messages)
-        }
+        messages = Message.last_15_messages(data['room'])
+        if messages is not None:
+            content = {
+                'command': 'messages',
+                'messages' : self.messages_to_json(messages)
+            }
+            self.send_message(content)
         
-        self.send_message(content)
+        
     
     def new_message(self, data):
-        author = data['user']
+        author = data['author']
+        current_room = Room.objects.get(name=data['room'])
+        
         author_user = User.objects.filter(username=author)[0]
         
-        message = Message.objects.create(
-            author=author_user,
-            content=data['message'])
-    
+        message = Message(author=author_user,
+                          content=data['message'],
+                          room=current_room)
+        message.save()
+        
+        content = {
+            'command' : 'new_message',
+            'message' : self.message_to_json(message)
+        }
+        return self.send_chat_message(content)
+        
+        
     commands = {
         'fetch_messages': fetch_messages,
         'new_message': new_message
@@ -41,8 +53,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def message_to_json(self, message):
         return {
-            # 'id': message.id,
-            'author': message.contact.user.username,
+            'author': message.author.username,
             'content': message.content,
             'timestamp': str(message.timestamp)
         }

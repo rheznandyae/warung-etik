@@ -25,6 +25,7 @@ PRODUCTION = os.getenv('DATABASE_URL') is not None
 # If you want to enable debugging on Heroku for learning purposes,
 # set this to True.
 DEBUG = not PRODUCTION
+DEBUG = True
 
 HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME', '')
 
@@ -88,14 +89,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'warung_etik.wsgi.application'
-ASGI_APPLICATION = 'warung_etik.asgi.application'
+ASGI_APPLICATION = "warung_etik.asgi.application"
 
-# TODO: make conditions for productions
+# Channels for chat, TODO change param for deployment.
+
+
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', ('127.0.0.1', 6379) )],
         },
     },
 }
