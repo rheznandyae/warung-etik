@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Warung Etik</title>
+{% load humanize %}
+<link rel="stylesheet" href="{% static 'css/style-transaksi.css' %}" />
+{% endblock meta %}
+
+{% block content %}
+
+<div class="container-md d-flex align-items-center flex-column min-vh-100">
+    
+    <section class="top-title">
+        <h1>Transaksi Saya</h1>
+    </section>
+
+    <section class="container">
+        <div class="card card-main">
+            <div class="margin-card">
+                
+                <section class="content-main">
+
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">No. Transaksi</th>
+                            <th scope="col">Time Stamp</th>
+                            <th scope="col">Total Pesanan</th>
+                            <th scope="col">Cara Pembayaran</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Detail</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for tr in transaksi %}
+                          {% if tr.usernamePembeli == request.user.username %}
+                          <tr>
+                            <td scope="row"><b>{{ tr.idTransaksi }}</b></td>
+                            <td>{{ tr.timeStamp }}</td>
+                            <td>Rp. {{ tr.totalPesanan |intcomma}}</td>
+                            <td>{{ tr.caraPembayaran }}</td>
+                            <td>{{ tr.statusTransaksi }}</td>
+                            <td>
+                                <a href="{% url 'transaksi:transaksiChecker' id=tr.idTransaksi%}" class="btn btn-outline-info">Detail</a>
+                            </td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                </section>
+                
+            </div>
+        </div>
+    </section>
+
+</div>
+
+{% endblock content %}
