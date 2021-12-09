@@ -77,6 +77,7 @@
                 <th scope="col">Cara Pembayaran</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
+                <th scope="col">Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -150,6 +151,9 @@
                   {% else %}
                   -
                   {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'transaksi:transaksiAdmin' id=tr.0 %}" class="btn btn-outline-info">Detail</a>
                 </td>
               </tr>
               {% endfor %}

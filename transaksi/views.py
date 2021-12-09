@@ -113,6 +113,24 @@ def transaksiChecker(request, id):
         else:
             return render(request, 'transaksi-done.html', context)
 
+def transaksiViewer(request):
+    context = {"transaksi":Transaksi.objects.all()}
+
+    return render(request, 'transaksi-viewer.html', context)
+
+def transaksiAdmin(request, id):
+    TR = Transaksi.objects.get(idTransaksi = id)
+    username = TR.usernamePembeli
+
+    context = {"transaksi":TR}
+
+    context['items'] = get_items_by_tr(username, TR)
+
+    print(context)
+
+    return render(request, 'transaksi-admin.html', context)
+
+
 def validate_is_barang_available(username):
     item_keranjangs = ItemKeranjang.objects.filter(pelanggan__username = username, transaksi=None)
     item_not_available = []
