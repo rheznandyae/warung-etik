@@ -19,7 +19,7 @@
 
 				{% if request.user.is_authenticated and request.user.is_superuser %}
 					<a class="dropdown-item" href="{% url 'chat:check' %}">Chat</a>
-					<a class="dropdown-item" href="{% url 'admin_warung:dashboard' %}">dashboard</a>
+					<a class="dropdown-item" href="{% url 'admin_warung:dashboard' %}">Dashboard</a>
 					<a class="dropdown-item" href="{% url 'main:logout' %}">Logout</a>
 				{% elif request.user.is_authenticated %}
 					<a class="dropdown-item" href="{% url 'chat:check' %}">Chat Admin</a>
