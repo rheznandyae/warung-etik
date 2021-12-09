@@ -2,6 +2,7 @@ from os import name
 from django.http import response, HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import *
 from .barang_form import ExcelUploadForm
@@ -20,129 +21,143 @@ from keranjang.models import ItemKeranjang
 
 
 def dashboard(request):
-    barangs = Barang.objects.all()
+    if request.user.is_superuser:
+        barangs = Barang.objects.all()
 
-    if request.method == 'POST':
-        action = request.POST.get('action')
+        if request.method == 'POST':
+            action = request.POST.get('action')
 
-        if action == 'konfirmasi':
-            idTransaksi = request.POST.get('transaksi')
-            update_transaksi(idTransaksi)
+            if action == 'konfirmasi':
+                idTransaksi = request.POST.get('transaksi')
+                update_transaksi(idTransaksi)
 
-            username = request.user.username
-            set_barang_terjual(username, idTransaksi)
+                username = request.user.username
+                set_barang_terjual(username, idTransaksi)
 
-            redirect('admin_warung:dashboard')
-        else:
-            idTransaksi = request.POST.get('transaksi')
-            update_status(idTransaksi)
+                redirect('admin_warung:dashboard')
+            else:
+                idTransaksi = request.POST.get('transaksi')
+                update_status(idTransaksi)
 
-            redirect('admin_warung:dashboard')
+                redirect('admin_warung:dashboard')
 
-    context = {
-        "excel_upload_form": ExcelUploadForm(),
-        "barangs": barangs,
-    }
+        context = {
+            "excel_upload_form": ExcelUploadForm(),
+            "barangs": barangs,
+        }
 
-    context['transaksi'] = get_all_transaksi()
+        context['transaksi'] = get_all_transaksi()
 
-    # print(context)
-    return render(request, 'dashboard.html', context=context)
+        # print(context)
+        return render(request, 'dashboard.html', context=context)
+
+    return redirect('../')
 
 def detail_barang_admin_view(request, id):
-    response = {}
-    barang = get_object_or_404(Barang, id=id)
-    response['barang'] = barang
+    if request.user.is_superuser:
+        response = {}
+        barang = get_object_or_404(Barang, id=id)
+        response['barang'] = barang
 
-    return render(request, 'detail_barang_admin.html', response)
-
+        return render(request, 'detail_barang_admin.html', response)
+    return redirect('../')
 
 def hapus_barang_view(request, id):
-    response = {}
-    barang = get_object_or_404(Barang, id=id)
-    response['barang'] = barang
+    if request.user.is_superuser:
+        response = {}
+        barang = get_object_or_404(Barang, id=id)
+        response['barang'] = barang
 
-    if(request.method == 'POST'):
-        barang.delete()
+        if(request.method == 'POST'):
+            barang.delete()
 
-        return redirect('/dashboard')
+            return redirect('/dashboard')
 
-    return render(request, 'hapus_barang.html', response)
-
+        return render(request, 'hapus_barang.html', response)
+    return redirect('../')
 
 def tambah_barang_view(request):
-    response = {}
-    if(request.method == 'POST'):
-        nama = request.POST.get("nama")
-        harga = request.POST.get("harga")
-        stok = request.POST.get("stok")
-        terjual = request.POST.get("terjual")
-        deskripsi = request.POST.get("deskripsi")
-        image_url = request.POST.get("image_url")
+    if request.user.is_superuser:
+        response = {}
+        if(request.method == 'POST'):
+            nama = request.POST.get("nama")
+            harga = request.POST.get("harga")
+            stok = request.POST.get("stok")
+            terjual = request.POST.get("terjual")
+            deskripsi = request.POST.get("deskripsi")
+            image_url = request.POST.get("image_url")
 
-        barang = Barang.objects.create(nama=nama, harga=harga, stok=stok, terjual=terjual, deskripsi=deskripsi, image_url=image_url)
-        redir = f'/dashboard/detail-barang/{barang.id}'
-        return redirect(redir)
-    
-    return render(request, 'tambah_barang.html', response)
-
+            barang = Barang.objects.create(nama=nama, harga=harga, stok=stok, terjual=terjual, deskripsi=deskripsi, image_url=image_url)
+            redir = f'/dashboard/detail-barang/{barang.id}'
+            return redirect(redir)
+        
+        return render(request, 'tambah_barang.html', response)
+    return redirect('../')
 
 def ubah_barang_view(request, id):
-    response = {}
-    barang = get_object_or_404(Barang, id=id)
-    response['barang'] = barang
+    if request.user.is_superuser:
+        response = {}
+        barang = get_object_or_404(Barang, id=id)
+        response['barang'] = barang
 
-    if(request.method == 'POST'):
-        nama = request.POST.get("nama")
-        harga = request.POST.get("harga")
-        stok = request.POST.get("stok")
-        terjual = request.POST.get("terjual")
-        deskripsi = request.POST.get("deskripsi")
-        image_url = request.POST.get("image_url")
+        if(request.method == 'POST'):
+            nama = request.POST.get("nama")
+            harga = request.POST.get("harga")
+            stok = request.POST.get("stok")
+            terjual = request.POST.get("terjual")
+            deskripsi = request.POST.get("deskripsi")
+            image_url = request.POST.get("image_url")
 
-        Barang.objects.filter(id=id).update(nama=nama, harga=harga, stok=stok, terjual=terjual, deskripsi=deskripsi, image_url=image_url)
-        redir = f'/dashboard/detail-barang/{id}'
-        return redirect(redir)
+            Barang.objects.filter(id=id).update(nama=nama, harga=harga, stok=stok, terjual=terjual, deskripsi=deskripsi, image_url=image_url)
+            redir = f'/dashboard/detail-barang/{id}'
+            return redirect(redir)
 
-    return render(request, 'ubah_barang.html', response)
-
+        return render(request, 'ubah_barang.html', response)
+    return redirect('../')
 
 def list_ubah_view(request):
-    response = {}
-    barangs = Barang.objects.all()
-    response['barangs'] = barangs
-    return render(request, 'list_ubah.html', response)
+    if request.user.is_superuser:
+        response = {}
+        barangs = Barang.objects.all()
+        response['barangs'] = barangs
+        return render(request, 'list_ubah.html', response)
+    return redirect('../')
 
 def list_hapus_view(request):
-    response = {}
-    barangs = Barang.objects.all()
-    response['barangs'] = barangs
-    return render(request, 'list_hapus.html', response)
-
+    if request.user.is_superuser:
+        response = {}
+        barangs = Barang.objects.all()
+        response['barangs'] = barangs
+        return render(request, 'list_hapus.html', response)
+    return redirect('../')
 
 def import_barang(request):
-    form = ExcelUploadForm(request.POST, request.FILES)
-    if form.is_valid():
-        workbook = load_workbook(request.FILES["excel_file"])
-        sheet = workbook.active
-        Barang.objects.all().delete()   
-        
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            if(row[0] == None):
-                break
-            barang = Barang(nama=row[1],
-                            harga=row[2],
-                            stok=row[3],
-                            terjual=row[4],
-                            deskripsi=row[5],
-                            image_url=row[6])
-
-            barang.save()
+    if request.user.is_superuser:
+        form = ExcelUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            workbook = load_workbook(request.FILES["excel_file"])
+            sheet = workbook.active
+            Barang.objects.all().delete()   
             
-        return redirect(reverse_lazy('admin_warung:dashboard'))
-    
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                if(row[0] == None):
+                    break
+                barang = Barang(nama=row[1],
+                                harga=row[2],
+                                stok=row[3],
+                                terjual=row[4],
+                                deskripsi=row[5],
+                                image_url=row[6])
+
+                barang.save()
+                
+            return redirect(reverse_lazy('admin_warung:dashboard'))
+    return redirect('../')
+
+
 
 def export_barang():
+    
     wb = Workbook()
 
     ws = wb.active
@@ -202,7 +217,9 @@ def export_barang():
 
     return wb
 
-def download(_):
+
+@user_passes_test(lambda u: u.is_superuser)
+def download(request):
     response = HttpResponse(save_virtual_workbook(
         export_barang()), content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = f'attachment; filename="Export_Barang-{datetime.now()}.xlsx"'
@@ -231,6 +248,7 @@ def get_all_transaksi():
 
     return context
 
+
 def update_transaksi(id):
     context = []
 
@@ -241,6 +259,7 @@ def update_transaksi(id):
     transaksi.save()
 
     return context
+
 
 def update_status(id):
     context = []
@@ -253,6 +272,7 @@ def update_status(id):
 
     return context
 
+
 def set_barang_terjual(username, id):
     tr = Transaksi.objects.get(idTransaksi = id)
     item_keranjang = ItemKeranjang.objects.filter(pelanggan__username = username,  transaksi = tr)
@@ -262,3 +282,4 @@ def set_barang_terjual(username, id):
         barang = item.barang
         barang.terjual = barang.terjual + item.jumlah_item
         barang.save()
+
