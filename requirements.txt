@@ -28,6 +28,6 @@ Twisted==21.7.0
 # twisted-iocpsupport==1.0.2
 txaio==21.2.1
 typing_extensions==4.0.0
-urllib3==1.26.7
+urllib3==1.26.17
 whitenoise==5.3.0
 zope.interface==5.4.0
